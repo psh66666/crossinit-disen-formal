@@ -126,3 +126,7 @@ python -m scripts.disen_formal.package
    a human check before publication.
 4. Raw faces and pretrained weights are not redistributed; follow the dataset's
    research-use terms.
+
+## Code repository
+
+https://github.com/psh66666/crossinit-disen-formal
