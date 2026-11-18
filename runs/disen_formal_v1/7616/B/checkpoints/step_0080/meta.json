@@ -1,0 +1,12 @@
+{
+  "group": "B",
+  "image_id": "7616",
+  "init_sha256": "d1af2cd318e176ff48e477d134f7893f89f6d266f9a773b19880c9fe5d700619",
+  "model": "/root/autodl-tmp/crossinit-disen-formal/models/sd2-1-base",
+  "model_index_sha256": "518553e098fdaa4153d9a92139e344e44f53bb329c22f383293e3099c4f1bad2",
+  "plan_sha256": "4a2dfccb4de8db48431d6845401658ae58ccff888ece7293e0375e35b2ced1f0",
+  "run_config_hash": "8168a487704bc145262d18377efb938a4f773675434c8273d87f3212b9467588",
+  "saved_at": "2026-11-19T01:36:45+0800",
+  "step": 80,
+  "trainable_sha256": "cf73900dcbad997e99a83d1810f36aa9e7c1ffcd87a4e7dfa5d47c2433efbdd2"
+}

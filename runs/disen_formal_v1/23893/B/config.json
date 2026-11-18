@@ -1,0 +1,15 @@
+{
+  "args": {
+    "engineering": false,
+    "freeze": "locks/disen_formal_v1/freeze.json",
+    "group": "B",
+    "image_id": "23893",
+    "max_updates": null,
+    "protocol": "experiments/disen_formal_v1/protocol.json",
+    "resume": true
+  },
+  "freeze_hash": "a6db6899b60d82eca6a574c903769c6684848814079456a99b49d376262d21f8",
+  "group": "B",
+  "image_id": "23893",
+  "pid": 156508
+}

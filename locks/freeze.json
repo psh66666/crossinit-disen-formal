@@ -1,0 +1,914 @@
+{
+  "assets": {
+    "cuda": "12.1",
+    "cudnn": 8902,
+    "data": {
+      "attributes": "/root/autodl-tmp/data_raw/CelebAMask-HQ/CelebAMask-HQ-attribute-anno.txt",
+      "attributes_sha256": "ec5e4bb1af5cac97612e4a92ba25b658f17bf50af02469fd654e9f304b0dd66c",
+      "identity": "/root/autodl-tmp/crossinit-disen-formal/data/annotations/identity_CelebA.txt",
+      "identity_sha256": "ac9012d939f9bde0e8f7f32a9ebdf64850ffc09f6e8e97207e919eb35daa4fde",
+      "image_count": 30000,
+      "mapping": "/root/autodl-tmp/data_raw/CelebAMask-HQ/CelebA-HQ-to-CelebA-mapping.txt",
+      "mapping_sha256": "d8d43deb196384cc086233d133624ce2f55f1c41300e91d865f2aa3c24f3614a",
+      "pose": "/root/autodl-tmp/data_raw/CelebAMask-HQ/CelebAMask-HQ-pose-anno.txt",
+      "pose_sha256": "8633b14c46f51e2586e110222379561c8dc0ce0ec866f862565c7fd9e3b8b4ca"
+    },
+    "gpu": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 4090",
+        "total_memory_bytes": 25250627584
+      }
+    ],
+    "hardware": {
+      "cpu_count": 128,
+      "machine": "x86_64",
+      "nvidia_smi": [
+        "NVIDIA GeForce RTX 4090, 24564 MiB, 580.105.08"
+      ],
+      "platform": "Linux-5.15.0-94-generic-x86_64-with-glibc2.35",
+      "processor": "x86_64"
+    },
+    "history_model_source": null,
+    "history_model_sources": [],
+    "model": {
+      "hashes": {
+        "model_index.json": "518553e098fdaa4153d9a92139e344e44f53bb329c22f383293e3099c4f1bad2",
+        "unet/diffusion_pytorch_model.bin": "da861650fc7df96390abffcbb9bcf67b7c5566422fda5af9bc003605be65c5f3",
+        "vae/diffusion_pytorch_model.bin": "44915add42092106e70bffac475aae4283b5e8167a8a0c5f55ccc667ee4ebeb5",
+        "vae/diffusion_pytorch_model.safetensors": "a1d993488569e928462932c8c38a0760b874d166399b14414135bd9c42df5815"
+      },
+      "model_index_sha256": "518553e098fdaa4153d9a92139e344e44f53bb329c22f383293e3099c4f1bad2",
+      "path": "/root/autodl-tmp/crossinit-disen-formal/models/sd2-1-base",
+      "resolved": "/root/autodl-tmp/models/sd2-1-base"
+    },
+    "protocol_id": "crossinit_disen_formal_v1_20261119",
+    "python": "3.10.22 (main, Oct 29 2026, 20:33:25) [GCC 14.3.0]",
+    "torch": "2.1.2+cu121"
+  },
+  "assets_hash": "326a912301cace511244d18ffa722e5ecdf7fa5005237cb88e572db1710a55b4",
+  "code": {
+    "crossinit/__init__.py": "863d48e4fb21f9773f20b7b9c23eabcd705b831ce33d3ab83bb8572f5543efc4",
+    "crossinit/attention.py": "aa22c6d717f183f08e4da469904411d144d73fbf55b2e93b9e77951b6dc5e0e8",
+    "crossinit/clip_model.py": "71eb98ab94f0f4ad0ed07288530cbe09078ca39099371720f19ab71043126d2f",
+    "crossinit/config.py": "3a5a5214a9f18680c6ff096a505b06167f4509d1050246269e35ec133ac67348",
+    "crossinit/core.py": "fc0a4595828df472ade4b01d6bdfaf85f9459a632f0c3ece004298ad1439cfef",
+    "crossinit/cpa.py": "bc278822d0dfbed7864a3c401b0383d5b48230b3308cb9b932993dd64e5887c8",
+    "crossinit/dataset.py": "de81fb637f56f148c2b2cd98e89e289f60b5fec4468cd73b31cd9459af813e8a",
+    "crossinit/debug.py": "54b8161d3fc54961a17ac3b4b16eaee7a9597d5a052e04497b633f1b9dabdea4",
+    "crossinit/disen_adapter.py": "3178d5f50a1f5b2641e957923dbc0a66561ef91f6d7100dd2546682d2a9e737d",
+    "crossinit/disen_lora.py": "4aecaf42a0402697d5fd5a90e1d67dbf1d74a9e0765b0b1a317097e65deaa99a",
+    "crossinit/disen_state.py": "966fd87135cb999f70844bed41170465a8baab11bd4e904aacaddaa6e9dc7a7e",
+    "crossinit/face.py": "e26adff0ac70bd887503b12221341e03f3126aed6a98b27ce1f0d2e431a29c21",
+    "crossinit/init.py": "965bcaff40d0b63af24ee66fec181c65afed49c7baaccdc86c671e2028385082",
+    "crossinit/logging_utils.py": "17d350c9000bb34f678f10bfe58b85e8f3b4688257ebe578f627ad0890061894",
+    "crossinit/losses.py": "d56f3c770f220e5e038936e72bd4a34a2d512a695455fced7f0c19f31c06faeb",
+    "crossinit/masks.py": "a82ed00f0d9aac74366c103fa003a57df8fe8e41d2f6d95eb8470a628fa1b98d",
+    "crossinit/pipeline_io.py": "66450cdd791c9574f5610f5d719f3d7cfffbca2c85528281da067325bbb5f78d",
+    "experiments/disen_formal_v1/human_rubric.json": "3fa075091db2a99fcccb6c830e060784174ff517a2f7dba867b41b6cb00523fc",
+    "experiments/disen_formal_v1/prompts.jsonl": "23b435c899b20a60c9ea687afda6a0e62d619b1c8ed35a3034c70825ac216a0d",
+    "experiments/disen_formal_v1/protocol.json": "c01e4e5c17dddf4d4d8cbf7a8c884daf898d177a7debc77bab58403abf184aea",
+    "generate.py": "cb599f49aa64c8a2da974614809ee99ed1030068b98de142e73c641d048b6efb",
+    "requirements.txt": "f2e8e6671751ca6c537c0cc3525be92982639c37b46700061637e55c666873e8",
+    "scripts/disen_formal/__init__.py": "580f353f53f1ab68286a67b8578d190c79c8fe67ee30c9f790b10286086412de",
+    "scripts/disen_formal/aggregate.py": "435c416751e42dd597e7f8b37f735961de42e7f45f6d50b3b86c5bcf0b669388",
+    "scripts/disen_formal/assets.py": "76d8e4eaa8dcd1ae1ae96cf5eff74cc948721eb395193fbc8cbe3e390ec47c24",
+    "scripts/disen_formal/blind.py": "ea209b37d35ade43f1df8dddb927f9053daaee0aa63ea0870f3997d0fdf5e424",
+    "scripts/disen_formal/cache.py": "78a77b542f2908f5a298494c82bc89ffc44a1948e63d18d8d97bc55befe3bfdd",
+    "scripts/disen_formal/check.py": "b17e026107a29ac04baa4f51532c9de51567a362fe3fdba8ff17c43dd967c6d5",
+    "scripts/disen_formal/common.py": "b0e27b7055f11352bda99b5dc4150eba456d769df16371bf985a7ba300fc7937",
+    "scripts/disen_formal/data.py": "82a65aaa4abfc215920dec635b00713d8491d42419c650aa9596fec2acbf9e23",
+    "scripts/disen_formal/generate.py": "0f05cffac9ed897368fcc4ae50482efa611bc9a6d9bf4c0211f61a0b776e06fd",
+    "scripts/disen_formal/package.py": "07e140c63224b4c8db14d9bb56184605d29548ef1ccec4bee541ab0436a2ec74",
+    "scripts/disen_formal/report.py": "aa90c50752c084bdbb67160dcdd71ee3f3f7357e63de2eafe5b87c4abafd2cf6",
+    "scripts/disen_formal/run_matrix.py": "e7e0a1d808561878d6380d59f426f3876532bb3d84f56ba232e647e2bc37b32b",
+    "scripts/disen_formal/score.py": "7800b4ffeefa8021b48edf18db2c9ef858ad13b77b452cdd0727fae7e2307e56",
+    "scripts/disen_formal/train.py": "943ca89c90268298c702acbe3362f5172331b06e32a05c1c38582d53c2a23046",
+    "train.py": "b20e3684beb12ecac4dbdfa57cf7a1b66027bb58bc30628cd942f52b112edc0c"
+  },
+  "expected": {
+    "adaptation_jobs": 24,
+    "adaptation_updates_all_persons": 48000,
+    "baseline_jobs": 8,
+    "baseline_microsteps_all_persons": 10240,
+    "formal_source_images": 8,
+    "human_tasks": 176,
+    "total_generation_images": 512,
+    "total_optimizer_updates": 50560,
+    "total_training_jobs": 32
+  },
+  "freeze_hash": "a6db6899b60d82eca6a574c903769c6684848814079456a99b49d376262d21f8",
+  "identities": {
+    "human_visual_review_completed": false,
+    "identities": [
+      {
+        "det_score": 0.8448522090911865,
+        "face_area_fraction": 0.3247759587648149,
+        "image_id": 25211,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/25211.jpg",
+        "original_sha256": "9667f99787e3509c412a3da09c2220a4c24437a5875b5afaa52aedc18550ab29",
+        "person_id": 458,
+        "pose_yaw_pitch_roll": [
+          9.241402,
+          -14.116844,
+          -1.978569
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 1,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/25211.png",
+        "source_512_sha256": "44ef13babd79a0a952099f685d0b177e1f2d2c9d7bb01a5f2e89d22b129b3286",
+        "source_face_embedding_sha256": "4c6f68671b64cbd0e69705e0a9220966d350e5c267ae8e49db8ab76d766d20fa",
+        "status": "formal"
+      },
+      {
+        "det_score": 0.8262439966201782,
+        "face_area_fraction": 0.3029203902683104,
+        "image_id": 15268,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/15268.jpg",
+        "original_sha256": "b3d3556a1f9703ba8196de063a8aa6de66f0ca691313ebe2eed026513840a90f",
+        "person_id": 6581,
+        "pose_yaw_pitch_roll": [
+          -0.13743591,
+          -13.837662,
+          0.010917664
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 2,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/15268.png",
+        "source_512_sha256": "bba8bd76cba5ad26484775209297c88b32b4f53eca6c0209195204b4cf734713",
+        "source_face_embedding_sha256": "de9ada95aaf708f1e48a35f02478f99d9c2b94bea7fd8bf85e6f707203a961f0",
+        "status": "formal"
+      },
+      {
+        "det_score": 0.8324893712997437,
+        "face_area_fraction": 0.33945001531107977,
+        "image_id": 1896,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/1896.jpg",
+        "original_sha256": "a254a70f6fa889cf1de9dc6a01994f19062d7fe864480a6086f2b98e7be74430",
+        "person_id": 446,
+        "pose_yaw_pitch_roll": [
+          -1.1728516,
+          -11.444847,
+          -0.6668854
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 3,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/1896.png",
+        "source_512_sha256": "58c0bee9c17107e582b70a7e0f925b4baa9fbd3ddee6f75d3a643c5aa10ae41e",
+        "source_face_embedding_sha256": "bb288ac5c1896335c8d68cd5c2f0299b003ad78643db5d9859c4b118d795e756",
+        "status": "formal"
+      },
+      {
+        "det_score": 0.8100987672805786,
+        "face_area_fraction": 0.3325453746061564,
+        "image_id": 13069,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/13069.jpg",
+        "original_sha256": "cc2aac06bb4f27280e8d9a877c8927b94ff09ae8b40047c9ee9d2a11fd03effc",
+        "person_id": 4364,
+        "pose_yaw_pitch_roll": [
+          -0.08355713,
+          -9.459915,
+          1.2368011
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 4,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/13069.png",
+        "source_512_sha256": "fe10e8f920c3bc3488f5421556116cc6bb6da13542a074b8238391e2b7fb6458",
+        "source_face_embedding_sha256": "aa3ce46f784485cac96610f5df5d00ad98cf3fb2b751e7abd1f7802e5ae32e77",
+        "status": "formal"
+      },
+      {
+        "det_score": 0.8028415441513062,
+        "face_area_fraction": 0.3280704870536981,
+        "image_id": 7616,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/7616.jpg",
+        "original_sha256": "67cf8532d39e841e97032aa9770d09a6d4941bcbb282973dfb45f7d018d25cc5",
+        "person_id": 8810,
+        "pose_yaw_pitch_roll": [
+          1.6123047,
+          1.3743591,
+          2.2019958
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 5,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/7616.png",
+        "source_512_sha256": "43943f3a9953d04c9a836a17b4ad4c31a37195d1cd48f7322e020bccd6c9b3c2",
+        "source_face_embedding_sha256": "a4ed5c37ff203f298cccec54973a17e48395fb887aa2663e1f53976f51c492b1",
+        "status": "formal"
+      },
+      {
+        "det_score": 0.8020969033241272,
+        "face_area_fraction": 0.31451976204334375,
+        "image_id": 6802,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/6802.jpg",
+        "original_sha256": "dc6f986447e423855f5f6dc584eb1a5fe11b322abf8140252f8c39520f1f0c94",
+        "person_id": 1368,
+        "pose_yaw_pitch_roll": [
+          5.2243958,
+          0.5799866,
+          -0.34976196
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 6,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/6802.png",
+        "source_512_sha256": "b54c2751811422bad8037bf2425cde0f8553f312f084246bc0bf557f48e93275",
+        "source_face_embedding_sha256": "d20df3040257813d4bb49bb0b9e8d14047feca500e0caf500fa6e3ce427c6160",
+        "status": "formal"
+      },
+      {
+        "det_score": 0.8268477916717529,
+        "face_area_fraction": 0.30964492806709787,
+        "image_id": 23893,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/23893.jpg",
+        "original_sha256": "c97123888df96c67eb143b3aaa313cd1eb4167f0725c9af8ea1d7399db04407c",
+        "person_id": 6372,
+        "pose_yaw_pitch_roll": [
+          -7.4280243,
+          3.5138092,
+          2.1024399
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 7,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/23893.png",
+        "source_512_sha256": "b8672c49715fe716cccf8fea9fc1a76e8784d9aefa3cc067b9eea0f4d11bc9e6",
+        "source_face_embedding_sha256": "de664acd801f30cc1a2f8e329ad9b8d62597f708d80f307f0631a3fdcb4e2090",
+        "status": "formal"
+      },
+      {
+        "det_score": 0.8123968839645386,
+        "face_area_fraction": 0.3385499709631201,
+        "image_id": 23493,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/23493.jpg",
+        "original_sha256": "151c7635f05da1f1edd70c9edaa446a60fdfdf0b8594fba4388ee19b2d171e2d",
+        "person_id": 5343,
+        "pose_yaw_pitch_roll": [
+          10.404266,
+          -0.95331573,
+          -1.5243988
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 8,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/23493.png",
+        "source_512_sha256": "9439e62b67573181d6ec847badccb1c0826489ac413fe775704584d1251dc720",
+        "source_face_embedding_sha256": "eedf9a02cf6b9b3f63915b897f56d14ee3e98897736831d3d17610ffb903c51d",
+        "status": "formal"
+      },
+      {
+        "det_score": 0.8037911653518677,
+        "face_area_fraction": 0.3293821304599538,
+        "image_id": 22865,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/22865.jpg",
+        "original_sha256": "8a2e0639c7dfd01a9957436254df1a804f414adc46e5c35d4c398584c2ed185e",
+        "person_id": 1844,
+        "pose_yaw_pitch_roll": [
+          0.9933624,
+          -12.155533,
+          -0.14781189
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 9,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/22865.png",
+        "source_512_sha256": "f98dda0f22a8dba0b2e7be6ece4ac2d5dc59867585c8c2561173add5c44706d8",
+        "source_face_embedding_sha256": "8fcd560d4c8fd8ee58031a71bc3f991c1f380e21e241200757a8f4fcf58da468",
+        "status": "reserve"
+      },
+      {
+        "det_score": 0.8261597156524658,
+        "face_area_fraction": 0.31824754982452097,
+        "image_id": 22832,
+        "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/22832.jpg",
+        "original_sha256": "53c63340b9f6d52300ab172ffbc2f04599a09f71e33756546b9c09e6b97469c5",
+        "person_id": 987,
+        "pose_yaw_pitch_roll": [
+          2.4654007,
+          2.7439957,
+          1.0609741
+        ],
+        "review": {
+          "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+          "human_visual_review": "pending",
+          "method": "automated_proxy_only"
+        },
+        "selection_order": 10,
+        "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/22832.png",
+        "source_512_sha256": "1506919152ccbca7c58a5f6ad49b6ecee9cd6d9df66174b08f6017ad7d546da1",
+        "source_face_embedding_sha256": "b34e8e9e53db2b699832a15774e4680160b80fd4b40650cd166cdc4805ead347",
+        "status": "reserve"
+      }
+    ],
+    "protocol_id": "crossinit_disen_formal_v1_20261119",
+    "review_method": "automated_proxy_only",
+    "selection_seed": 20261119,
+    "tokens": [
+      "<ci0>",
+      "<ci1>"
+    ]
+  },
+  "identities_sha256": "939619337c79b7e207bbefdee1e7a048fa0c9dd78ade8827bc089e78af0a95df",
+  "init": {
+    "path": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/celeb_init_691.pt",
+    "sha256": "d1af2cd318e176ff48e477d134f7893f89f6d266f9a773b19880c9fe5d700619"
+  },
+  "prompts": [
+    {
+      "attribute_text": "a portrait against a plain light gray background",
+      "category": "neutral",
+      "clip_text": "A head-and-shoulders photo of a person, facing the camera, against a plain light gray background.",
+      "id": "p01",
+      "prompt": "A head-and-shoulders photo of a {tokens} person, facing the camera, against a plain light gray background.",
+      "success_rule": "A plain light gray background is visible."
+    },
+    {
+      "attribute_text": "an outdoor portrait in natural lighting",
+      "category": "neutral",
+      "clip_text": "A head-and-shoulders photo of a person, facing the camera, outdoors in soft natural lighting.",
+      "id": "p02",
+      "prompt": "A head-and-shoulders photo of a {tokens} person, facing the camera, outdoors in soft natural lighting.",
+      "success_rule": "The setting is visibly outdoors."
+    },
+    {
+      "attribute_text": "a person wearing a red knitted scarf",
+      "category": "clothing",
+      "clip_text": "A head-and-shoulders photo of a person wearing a red knitted scarf, facing the camera.",
+      "id": "p03",
+      "prompt": "A head-and-shoulders photo of a {tokens} person wearing a red knitted scarf, facing the camera.",
+      "success_rule": "A red scarf is visible around the neck; a red shirt alone does not count."
+    },
+    {
+      "attribute_text": "a person wearing a blue denim jacket",
+      "category": "clothing",
+      "clip_text": "A head-and-shoulders photo of a person wearing a blue denim jacket, facing the camera.",
+      "id": "p04",
+      "prompt": "A head-and-shoulders photo of a {tokens} person wearing a blue denim jacket, facing the camera.",
+      "success_rule": "A blue jacket with visible denim-like texture or construction is present."
+    },
+    {
+      "attribute_text": "the interior of a tailor's shop with fabric rolls and a sewing machine",
+      "category": "scene",
+      "clip_text": "A head-and-shoulders photo of a person, facing the camera, inside a tailor's shop, with fabric rolls and a sewing machine visible in the background.",
+      "id": "p05",
+      "prompt": "A head-and-shoulders photo of a {tokens} person, facing the camera, inside a tailor's shop, with fabric rolls and a sewing machine visible in the background.",
+      "success_rule": "At least one recognizable fabric roll or sewing machine is visible in an indoor workshop setting."
+    },
+    {
+      "attribute_text": "the interior of a laundromat with washing machines",
+      "category": "scene",
+      "clip_text": "A head-and-shoulders photo of a person, facing the camera, inside a laundromat, with washing machines visible in the background.",
+      "id": "p06",
+      "prompt": "A head-and-shoulders photo of a {tokens} person, facing the camera, inside a laundromat, with washing machines visible in the background.",
+      "success_rule": "At least one recognizable washing machine is visible in an indoor setting."
+    },
+    {
+      "attribute_text": "the interior of a radio studio with a mixing console and studio microphones",
+      "category": "scene",
+      "clip_text": "A head-and-shoulders photo of a person, facing the camera, inside a radio studio, with a mixing console and studio microphones visible in the background.",
+      "id": "p07",
+      "prompt": "A head-and-shoulders photo of a {tokens} person, facing the camera, inside a radio studio, with a mixing console and studio microphones visible in the background.",
+      "success_rule": "A recognizable mixing console or studio microphone is visible in an indoor studio setting."
+    },
+    {
+      "attribute_text": "the interior of a glass greenhouse with glass panels and leafy plants",
+      "category": "scene",
+      "clip_text": "A head-and-shoulders photo of a person, facing the camera, inside a glass greenhouse, with glass panels and leafy plants visible in the background.",
+      "id": "p08",
+      "prompt": "A head-and-shoulders photo of a {tokens} person, facing the camera, inside a glass greenhouse, with glass panels and leafy plants visible in the background.",
+      "success_rule": "Both a glass enclosure or glass-panel structure and plants are visible."
+    }
+  ],
+  "prompts_sha256": "23b435c899b20a60c9ea687afda6a0e62d619b1c8ed35a3034c70825ac216a0d",
+  "protocol": {
+    "adaptation": {
+      "adapter_grad_clip": null,
+      "adapter_mask_init": 0,
+      "adapter_mlp": "Linear1024_ReLU_Linear1024_plus_masked_feature",
+      "all_attention_resolutions": true,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "caption": "a photo of a {tokens} person",
+      "checkpoints": [
+        500,
+        1000,
+        1500,
+        2000
+      ],
+      "clip_encode_image_normalize": false,
+      "clip_feature_cache_views": 1,
+      "clip_feature_preprocess": "disenbooth_official_resize224_bilinear_from_sd_minus1_plus1_no_extra_normalization",
+      "clip_image_model": "ViT-H-14",
+      "clip_image_precision": "fp32",
+      "clip_image_pretrained": "laion2b_s32b_b79k",
+      "eps": 1e-08,
+      "final_checkpoint": 2000,
+      "flip_probability": 0,
+      "frozen_parent_tokens": true,
+      "gradient_accumulation": 1,
+      "groups": [
+        "L",
+        "D",
+        "A"
+      ],
+      "image_adapter_hidden_size": 1024,
+      "init_seed": 20261121,
+      "learning_rate": 0.0001,
+      "lora_alpha": 4,
+      "lora_dropout": 0,
+      "lora_grad_clip": 1,
+      "lora_rank": 4,
+      "lora_targets": [
+        "attn1.to_q",
+        "attn1.to_k",
+        "attn1.to_v",
+        "attn1.to_out.0",
+        "attn2.to_q",
+        "attn2.to_k",
+        "attn2.to_v",
+        "attn2.to_out.0"
+      ],
+      "lr_schedule": "constant",
+      "micro_batch": 1,
+      "min_snr_weighting": false,
+      "optimizer_updates": 2000,
+      "parent_checkpoint": "B/320_of_same_person",
+      "prior_preservation": false,
+      "random_crop": false,
+      "sequential_backward": true,
+      "timestep_sampling": "uniform_integer_0_to_scheduler_num_train_timesteps_exclusive",
+      "train_seed": 20261120,
+      "train_text_encoder": false,
+      "warmup_steps": 0,
+      "weight_decay": 0.01
+    },
+    "baseline": {
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "checkpoints": [
+        80,
+        160,
+        240,
+        320
+      ],
+      "eps": 1e-08,
+      "final_checkpoint": 320,
+      "flip_probability": 0.5,
+      "gradient_accumulation": 4,
+      "group": "B",
+      "learning_rate": 0.005,
+      "lr_schedule": "constant",
+      "micro_batch": 1,
+      "micro_steps": 1280,
+      "optimizer_updates": 320,
+      "reg_form": "official_non_squared_pairwise_distance_mean",
+      "reg_weight": 1e-05,
+      "templates": "official_imagenet_templates_small_81_preserve_order_and_duplicates",
+      "text_template": "face of {tokens} person",
+      "train_seed": 20261119,
+      "warmup_steps": 0,
+      "weight_decay": 0.01
+    },
+    "data": {
+      "dataset": "CelebAMask-HQ/CelebA-HQ",
+      "exclude_matching_celeba_person_id": true,
+      "excluded_image_ids": [
+        167,
+        451,
+        8718,
+        2471,
+        9030,
+        2565,
+        1851,
+        2476,
+        9980,
+        5805,
+        3790,
+        9324
+      ],
+      "formal_persons": 8,
+      "images_per_person": 1,
+      "manual_front_face_review": true,
+      "manual_masks_required": false,
+      "near_duplicate_arcface_cosine_threshold": 0.65,
+      "reserve_persons": 2,
+      "resize": "PIL_BICUBIC_512x512",
+      "selection_seed": 20261119,
+      "source_detection_score_min": 0.8,
+      "source_face_area_fraction_max": 0.5,
+      "source_face_area_fraction_min": 0.06
+    },
+    "evaluation": {
+      "arcface_model": "buffalo_l",
+      "bootstrap_samples": 20000,
+      "bootstrap_seed": 20261119,
+      "bootstrap_unit": "person",
+      "both_face_area_ratio_interval": [
+        0.8,
+        1.25
+      ],
+      "clip_model": "openai/clip-vit-large-patch14",
+      "clip_score": "normalized_feature_cosine_unscaled",
+      "det_thresh": 0.5,
+      "detection_guardrail_delta": -0.05,
+      "detector_size": [
+        640,
+        640
+      ],
+      "editing_guardrail_delta": -0.1,
+      "familywise_interval_percent": 97.5,
+      "identity_practical_delta": 0.02,
+      "min_face_area_fraction": 0.02,
+      "missing_or_invalid_face_identity_score": 0,
+      "positive_person_count_support": 6,
+      "primary_comparisons": [
+        "D-B",
+        "L-B"
+      ],
+      "primary_metric": "ArcFace_zero_all_prompts",
+      "scene_margin": "target_scene_cosine_minus_mean_other_three",
+      "scene_prompt_ids": [
+        "p05",
+        "p06",
+        "p07",
+        "p08"
+      ],
+      "secondary_comparisons": [
+        "D-L",
+        "D-A"
+      ],
+      "secondary_interval_percent": 95,
+      "target_face": "largest_qualified_face_then_nearest_center_then_lexicographic_box"
+    },
+    "execution": {
+      "engineering_parent_is_cross_initialization_untrained": true,
+      "engineering_parent_step": 0,
+      "formal_parent_step_required": 320,
+      "group_order_alternates_by_person_position": [
+        [
+          "L",
+          "D",
+          "A"
+        ],
+        [
+          "A",
+          "D",
+          "L"
+        ]
+      ],
+      "max_nan_or_oom_same_step_retries": 1,
+      "max_reserved_gib": 22,
+      "no_adaptive_hyperparameter_search": true,
+      "no_metric_based_early_stopping": true,
+      "resource_check_outputs_discarded": true,
+      "resource_check_updates_per_group": 10
+    },
+    "expected_counts": {
+      "adaptation_jobs": 24,
+      "adaptation_updates_all_persons": 48000,
+      "baseline_jobs": 8,
+      "baseline_microsteps_all_persons": 10240,
+      "formal_source_images": 8,
+      "human_tasks": 176,
+      "total_generation_images": 512,
+      "total_optimizer_updates": 50560,
+      "total_training_jobs": 32
+    },
+    "formal_without_effect_pilot": true,
+    "generation": {
+      "adapter_at_inference": false,
+      "algorithm_type": "dpmsolver++",
+      "batch_size": 1,
+      "face_restoration": false,
+      "groups": [
+        "B",
+        "L",
+        "D",
+        "A"
+      ],
+      "guidance_scale": 7.5,
+      "images_per_group": 128,
+      "lora_scale": 1,
+      "negative_prompt": "",
+      "num_inference_steps": 50,
+      "paired_initial_latents": true,
+      "prompt_count": 8,
+      "scheduler": "DPMSolverMultistepScheduler",
+      "seeds": [
+        101,
+        202
+      ],
+      "solver_order": 2,
+      "solver_type": "midpoint",
+      "timestep_spacing": "linspace",
+      "total_images": 512,
+      "use_karras_sigmas": false
+    },
+    "group_losses": {
+      "A": {
+        "contrastive_weight": 0.001,
+        "image_adapter": true,
+        "precise_condition": "c+u",
+        "precise_weight": 1,
+        "weak_weight": 0
+      },
+      "D": {
+        "contrastive_weight": 0.001,
+        "image_adapter": true,
+        "precise_condition": "c+u",
+        "precise_weight": 1,
+        "weak_weight": 0.01
+      },
+      "L": {
+        "contrastive_weight": 0,
+        "image_adapter": false,
+        "precise_condition": "c",
+        "precise_weight": 1,
+        "weak_weight": 0
+      }
+    },
+    "human": {
+      "blind_seed": 20261122,
+      "comparisons": [
+        {
+          "left": "D",
+          "pairs": 64,
+          "prompts": "all_8",
+          "right": "B",
+          "seed": 101
+        },
+        {
+          "left": "L",
+          "pairs": 64,
+          "prompts": "all_8",
+          "right": "B",
+          "seed": 101
+        },
+        {
+          "left": "D",
+          "pairs": 32,
+          "prompts": [
+            "p03",
+            "p04",
+            "p05",
+            "p06"
+          ],
+          "right": "L",
+          "seed": 101
+        }
+      ],
+      "fields": [
+        "identity_preference_A_B_tie",
+        "edit_success_A_yes_no",
+        "edit_success_B_yes_no",
+        "severe_artifact_A_yes_no",
+        "severe_artifact_B_yes_no",
+        "joint_preference_A_B_tie"
+      ],
+      "human_editing_guardrail_prompts": [
+        "p03",
+        "p04",
+        "p05",
+        "p06",
+        "p07",
+        "p08"
+      ],
+      "no_human_score_groups": [
+        "A"
+      ],
+      "raters": 1,
+      "repeat_pairs": 16,
+      "repeat_task_ids": "uniformly_sample_from_160_with_seed_20261122",
+      "target_face_audit": "all_multiface_and_edge_flagged_outputs_before_method_unblinding",
+      "total_tasks": 176,
+      "unique_pairs": 160
+    },
+    "model": {
+      "gradient_checkpointing_default": false,
+      "local_dir": "models/sd2-1-base",
+      "lora_scale": 1,
+      "must_match_previously_used_sd21_weights": true,
+      "resolution": 512,
+      "text_hidden_size": 1024,
+      "trainable_dtype": "float32",
+      "unet_dtype": "bfloat16",
+      "vae_cache_dtype": "float32",
+      "xformers": false
+    },
+    "protocol_id": "crossinit_disen_formal_v1_20261119",
+    "remote_root": "/root/autodl-tmp/crossinit-disen-formal",
+    "source": {
+      "crossinit_commit": "0b1e39a6740a0152ad78a07b5ef99c9967687ad1",
+      "disenbooth_commit": "9956ab681dbed91efdb70f9305ce43f018fa7978"
+    },
+    "status": "execution_specification_requires_implementation"
+  },
+  "protocol_sha256": "c01e4e5c17dddf4d4d8cbf7a8c884daf898d177a7debc77bab58403abf184aea",
+  "rubric": {
+    "artifact": "yes if severe facial/anatomical distortion, incoherent main subject or major visible generation corruption; otherwise no.",
+    "editing": "Judge each image against its prompt success_rule, independently of identity; yes/no. Face visibility alone does not establish edit success.",
+    "identity": "Compare facial identity to the source, ignoring background, clothing and framing; A/B/tie.",
+    "joint": "Prefer the image that better preserves source identity while meeting the requested edit and avoiding severe artifacts; A/B/tie.",
+    "prompts": [
+      {
+        "id": "p01",
+        "success_rule": "A plain light gray background is visible."
+      },
+      {
+        "id": "p02",
+        "success_rule": "The setting is visibly outdoors."
+      },
+      {
+        "id": "p03",
+        "success_rule": "A red scarf is visible around the neck; a red shirt alone does not count."
+      },
+      {
+        "id": "p04",
+        "success_rule": "A blue jacket with visible denim-like texture or construction is present."
+      },
+      {
+        "id": "p05",
+        "success_rule": "At least one recognizable fabric roll or sewing machine is visible in an indoor workshop setting."
+      },
+      {
+        "id": "p06",
+        "success_rule": "At least one recognizable washing machine is visible in an indoor setting."
+      },
+      {
+        "id": "p07",
+        "success_rule": "A recognizable mixing console or studio microphone is visible in an indoor studio setting."
+      },
+      {
+        "id": "p08",
+        "success_rule": "Both a glass enclosure or glass-panel structure and plants are visible."
+      }
+    ],
+    "protocol_id": "crossinit_disen_formal_v1_20261119",
+    "rater_count": 1,
+    "repeat_policy": "Report agreement on the 16 repeated tasks; retain the first label for duplicate images and flag conflicting edit labels; do not delete raters/tasks for low agreement after seeing outcomes."
+  },
+  "rubric_sha256": "3fa075091db2a99fcccb6c830e060784174ff517a2f7dba867b41b6cb00523fc",
+  "technical_check": {
+    "B_microsteps": 40,
+    "adapter_grad_nonzero": true,
+    "checkpoint_roundtrip": {
+      "pass": true
+    },
+    "effects_not_evaluated": true,
+    "image_id": "25211",
+    "job_returncodes": {
+      "A": 0,
+      "B": 0,
+      "D": 0,
+      "L": 0
+    },
+    "lora_grad_nonzero": true,
+    "metrics_rows": {
+      "A": 10,
+      "B": 10,
+      "D": 10,
+      "L": 10
+    },
+    "peak_reserved_gib": 4.387,
+    "rng_aligned_LDA": true,
+    "sec_per_update": {
+      "A": 0.14484999999999998,
+      "B": 0.3370800000000001,
+      "D": 0.22959000000000002,
+      "L": 0.13838
+    },
+    "status": "PASS",
+    "token_row_grad_equivalence": {
+      "max_abs_grad_diff": 0.0,
+      "non_token_max_abs_grad": 0.26225748658180237,
+      "other_rows_frozen_in_trainer": true,
+      "pass": true
+    },
+    "updates_per_group": 10,
+    "uses_engineering_B0_parent": true,
+    "zero_lora": {
+      "identical_init_mismatch": 0.0,
+      "pass": true,
+      "zero_lora_max_abs_diff": 0.0
+    }
+  },
+  "templates_81": [
+    "a photo of a {}",
+    "a rendering of a {}",
+    "a cropped photo of the {}",
+    "the photo of a {}",
+    "a photo of a clean {}",
+    "a photo of a dirty {}",
+    "a dark photo of the {}",
+    "a photo of my {}",
+    "a photo of the cool {}",
+    "a close-up photo of a {}",
+    "a bright photo of the {}",
+    "a cropped photo of a {}",
+    "a photo of the {}",
+    "a good photo of the {}",
+    "a photo of one {}",
+    "a close-up photo of the {}",
+    "a rendition of the {}",
+    "a photo of the clean {}",
+    "a rendition of a {}",
+    "a photo of a nice {}",
+    "a good photo of a {}",
+    "a photo of the nice {}",
+    "a photo of the small {}",
+    "a photo of the weird {}",
+    "a photo of the large {}",
+    "a photo of a cool {}",
+    "a photo of a small {}",
+    "an illustration of a {}",
+    "a rendering of a {}",
+    "a cropped photo of the {}",
+    "the photo of a {}",
+    "an illustration of a clean {}",
+    "an illustration of a dirty {}",
+    "a dark photo of the {}",
+    "an illustration of my {}",
+    "an illustration of the cool {}",
+    "a close-up photo of a {}",
+    "a bright photo of the {}",
+    "a cropped photo of a {}",
+    "an illustration of the {}",
+    "a good photo of the {}",
+    "an illustration of one {}",
+    "a close-up photo of the {}",
+    "a rendition of the {}",
+    "an illustration of the clean {}",
+    "a rendition of a {}",
+    "an illustration of a nice {}",
+    "a good photo of a {}",
+    "an illustration of the nice {}",
+    "an illustration of the small {}",
+    "an illustration of the weird {}",
+    "an illustration of the large {}",
+    "an illustration of a cool {}",
+    "an illustration of a small {}",
+    "a depiction of a {}",
+    "a rendering of a {}",
+    "a cropped photo of the {}",
+    "the photo of a {}",
+    "a depiction of a clean {}",
+    "a depiction of a dirty {}",
+    "a dark photo of the {}",
+    "a depiction of my {}",
+    "a depiction of the cool {}",
+    "a close-up photo of a {}",
+    "a bright photo of the {}",
+    "a cropped photo of a {}",
+    "a depiction of the {}",
+    "a good photo of the {}",
+    "a depiction of one {}",
+    "a close-up photo of the {}",
+    "a rendition of the {}",
+    "a depiction of the clean {}",
+    "a rendition of a {}",
+    "a depiction of a nice {}",
+    "a good photo of a {}",
+    "a depiction of the nice {}",
+    "a depiction of the small {}",
+    "a depiction of the weird {}",
+    "a depiction of the large {}",
+    "a depiction of a cool {}",
+    "a depiction of a small {}"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "adapter_parameters": 2100224,
+  "config_hash": "0e1367d5740e57db0486d054a65488abf11101c8a939c2c4e9635fd9261a010b",
+  "engineering": false,
+  "group": "A",
+  "image_id": "23893",
+  "lora_hash": "e1d5b6ec6f5a8952aab6dcd8097ab3f18f8cb49457b5fbb561bd23a038ec639b",
+  "lora_init_seed": 20261121,
+  "lora_parameters": 829952,
+  "model_index_sha256": "518553e098fdaa4153d9a92139e344e44f53bb329c22f383293e3099c4f1bad2",
+  "parent_step": 320,
+  "parent_token_hash": "683f4885386f686edbd754b3282f3aca80fe1b43c966761354b3540d3ab69cc6",
+  "step": 2000,
+  "trainable_sha256": "e8984de0bc188eface9012caeb0757505792bbea9a382a403084d4c32fca444c"
+}

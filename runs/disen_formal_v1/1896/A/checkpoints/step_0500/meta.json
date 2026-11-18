@@ -1,0 +1,13 @@
+{
+  "config_hash": "0e1367d5740e57db0486d054a65488abf11101c8a939c2c4e9635fd9261a010b",
+  "engineering": false,
+  "group": "A",
+  "image_id": "1896",
+  "lora_init_seed": 20261121,
+  "model_index_sha256": "518553e098fdaa4153d9a92139e344e44f53bb329c22f383293e3099c4f1bad2",
+  "parent_step": 320,
+  "parent_token_hash": "01edcc0c60d78b04dafdfe6abf9ce4512de63b95e75738f6831bde42766d415a",
+  "saved_at": "2026-11-19T02:28:52+0800",
+  "step": 500,
+  "trainable_sha256": "f795c76346cef21e78867190914d98bf168400be26b31ef7e73aaa3d12d89ccf"
+}

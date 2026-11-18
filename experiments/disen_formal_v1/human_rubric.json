@@ -1,0 +1,44 @@
+{
+  "protocol_id": "crossinit_disen_formal_v1_20261119",
+  "rater_count": 1,
+  "identity": "Compare facial identity to the source, ignoring background, clothing and framing; A/B/tie.",
+  "editing": "Judge each image against its prompt success_rule, independently of identity; yes/no. Face visibility alone does not establish edit success.",
+  "artifact": "yes if severe facial/anatomical distortion, incoherent main subject or major visible generation corruption; otherwise no.",
+  "joint": "Prefer the image that better preserves source identity while meeting the requested edit and avoiding severe artifacts; A/B/tie.",
+  "repeat_policy": "Report agreement on the 16 repeated tasks; retain the first label for duplicate images and flag conflicting edit labels; do not delete raters/tasks for low agreement after seeing outcomes.",
+  "prompts": [
+    {
+      "id": "p01",
+      "success_rule": "A plain light gray background is visible."
+    },
+    {
+      "id": "p02",
+      "success_rule": "The setting is visibly outdoors."
+    },
+    {
+      "id": "p03",
+      "success_rule": "A red scarf is visible around the neck; a red shirt alone does not count."
+    },
+    {
+      "id": "p04",
+      "success_rule": "A blue jacket with visible denim-like texture or construction is present."
+    },
+    {
+      "id": "p05",
+      "success_rule": "At least one recognizable fabric roll or sewing machine is visible in an indoor workshop setting."
+    },
+    {
+      "id": "p06",
+      "success_rule": "At least one recognizable washing machine is visible in an indoor setting."
+    },
+    {
+      "id": "p07",
+      "success_rule": "A recognizable mixing console or studio microphone is visible in an indoor studio setting."
+    },
+    {
+      "id": "p08",
+      "success_rule": "Both a glass enclosure or glass-panel structure and plants are visible."
+    }
+  ]
+}
+

@@ -1,0 +1,242 @@
+{
+  "protocol_id": "crossinit_disen_formal_v1_20261119",
+  "selection_seed": 20261119,
+  "tokens": [
+    "<ci0>",
+    "<ci1>"
+  ],
+  "review_method": "automated_proxy_only",
+  "human_visual_review_completed": false,
+  "identities": [
+    {
+      "selection_order": 1,
+      "image_id": 25211,
+      "person_id": 458,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/25211.jpg",
+      "original_sha256": "9667f99787e3509c412a3da09c2220a4c24437a5875b5afaa52aedc18550ab29",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/25211.png",
+      "source_512_sha256": "44ef13babd79a0a952099f685d0b177e1f2d2c9d7bb01a5f2e89d22b129b3286",
+      "source_face_embedding_sha256": "4c6f68671b64cbd0e69705e0a9220966d350e5c267ae8e49db8ab76d766d20fa",
+      "det_score": 0.8448522090911865,
+      "face_area_fraction": 0.3247759587648149,
+      "pose_yaw_pitch_roll": [
+        9.241402,
+        -14.116844,
+        -1.978569
+      ],
+      "status": "formal",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 2,
+      "image_id": 15268,
+      "person_id": 6581,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/15268.jpg",
+      "original_sha256": "b3d3556a1f9703ba8196de063a8aa6de66f0ca691313ebe2eed026513840a90f",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/15268.png",
+      "source_512_sha256": "bba8bd76cba5ad26484775209297c88b32b4f53eca6c0209195204b4cf734713",
+      "source_face_embedding_sha256": "de9ada95aaf708f1e48a35f02478f99d9c2b94bea7fd8bf85e6f707203a961f0",
+      "det_score": 0.8262439966201782,
+      "face_area_fraction": 0.3029203902683104,
+      "pose_yaw_pitch_roll": [
+        -0.13743591,
+        -13.837662,
+        0.010917664
+      ],
+      "status": "formal",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 3,
+      "image_id": 1896,
+      "person_id": 446,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/1896.jpg",
+      "original_sha256": "a254a70f6fa889cf1de9dc6a01994f19062d7fe864480a6086f2b98e7be74430",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/1896.png",
+      "source_512_sha256": "58c0bee9c17107e582b70a7e0f925b4baa9fbd3ddee6f75d3a643c5aa10ae41e",
+      "source_face_embedding_sha256": "bb288ac5c1896335c8d68cd5c2f0299b003ad78643db5d9859c4b118d795e756",
+      "det_score": 0.8324893712997437,
+      "face_area_fraction": 0.33945001531107977,
+      "pose_yaw_pitch_roll": [
+        -1.1728516,
+        -11.444847,
+        -0.6668854
+      ],
+      "status": "formal",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 4,
+      "image_id": 13069,
+      "person_id": 4364,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/13069.jpg",
+      "original_sha256": "cc2aac06bb4f27280e8d9a877c8927b94ff09ae8b40047c9ee9d2a11fd03effc",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/13069.png",
+      "source_512_sha256": "fe10e8f920c3bc3488f5421556116cc6bb6da13542a074b8238391e2b7fb6458",
+      "source_face_embedding_sha256": "aa3ce46f784485cac96610f5df5d00ad98cf3fb2b751e7abd1f7802e5ae32e77",
+      "det_score": 0.8100987672805786,
+      "face_area_fraction": 0.3325453746061564,
+      "pose_yaw_pitch_roll": [
+        -0.08355713,
+        -9.459915,
+        1.2368011
+      ],
+      "status": "formal",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 5,
+      "image_id": 7616,
+      "person_id": 8810,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/7616.jpg",
+      "original_sha256": "67cf8532d39e841e97032aa9770d09a6d4941bcbb282973dfb45f7d018d25cc5",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/7616.png",
+      "source_512_sha256": "43943f3a9953d04c9a836a17b4ad4c31a37195d1cd48f7322e020bccd6c9b3c2",
+      "source_face_embedding_sha256": "a4ed5c37ff203f298cccec54973a17e48395fb887aa2663e1f53976f51c492b1",
+      "det_score": 0.8028415441513062,
+      "face_area_fraction": 0.3280704870536981,
+      "pose_yaw_pitch_roll": [
+        1.6123047,
+        1.3743591,
+        2.2019958
+      ],
+      "status": "formal",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 6,
+      "image_id": 6802,
+      "person_id": 1368,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/6802.jpg",
+      "original_sha256": "dc6f986447e423855f5f6dc584eb1a5fe11b322abf8140252f8c39520f1f0c94",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/6802.png",
+      "source_512_sha256": "b54c2751811422bad8037bf2425cde0f8553f312f084246bc0bf557f48e93275",
+      "source_face_embedding_sha256": "d20df3040257813d4bb49bb0b9e8d14047feca500e0caf500fa6e3ce427c6160",
+      "det_score": 0.8020969033241272,
+      "face_area_fraction": 0.31451976204334375,
+      "pose_yaw_pitch_roll": [
+        5.2243958,
+        0.5799866,
+        -0.34976196
+      ],
+      "status": "formal",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 7,
+      "image_id": 23893,
+      "person_id": 6372,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/23893.jpg",
+      "original_sha256": "c97123888df96c67eb143b3aaa313cd1eb4167f0725c9af8ea1d7399db04407c",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/23893.png",
+      "source_512_sha256": "b8672c49715fe716cccf8fea9fc1a76e8784d9aefa3cc067b9eea0f4d11bc9e6",
+      "source_face_embedding_sha256": "de664acd801f30cc1a2f8e329ad9b8d62597f708d80f307f0631a3fdcb4e2090",
+      "det_score": 0.8268477916717529,
+      "face_area_fraction": 0.30964492806709787,
+      "pose_yaw_pitch_roll": [
+        -7.4280243,
+        3.5138092,
+        2.1024399
+      ],
+      "status": "formal",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 8,
+      "image_id": 23493,
+      "person_id": 5343,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/23493.jpg",
+      "original_sha256": "151c7635f05da1f1edd70c9edaa446a60fdfdf0b8594fba4388ee19b2d171e2d",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/23493.png",
+      "source_512_sha256": "9439e62b67573181d6ec847badccb1c0826489ac413fe775704584d1251dc720",
+      "source_face_embedding_sha256": "eedf9a02cf6b9b3f63915b897f56d14ee3e98897736831d3d17610ffb903c51d",
+      "det_score": 0.8123968839645386,
+      "face_area_fraction": 0.3385499709631201,
+      "pose_yaw_pitch_roll": [
+        10.404266,
+        -0.95331573,
+        -1.5243988
+      ],
+      "status": "formal",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 9,
+      "image_id": 22865,
+      "person_id": 1844,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/22865.jpg",
+      "original_sha256": "8a2e0639c7dfd01a9957436254df1a804f414adc46e5c35d4c398584c2ed185e",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/22865.png",
+      "source_512_sha256": "f98dda0f22a8dba0b2e7be6ece4ac2d5dc59867585c8c2561173add5c44706d8",
+      "source_face_embedding_sha256": "8fcd560d4c8fd8ee58031a71bc3f991c1f380e21e241200757a8f4fcf58da468",
+      "det_score": 0.8037911653518677,
+      "face_area_fraction": 0.3293821304599538,
+      "pose_yaw_pitch_roll": [
+        0.9933624,
+        -12.155533,
+        -0.14781189
+      ],
+      "status": "reserve",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    },
+    {
+      "selection_order": 10,
+      "image_id": 22832,
+      "person_id": 987,
+      "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/22832.jpg",
+      "original_sha256": "53c63340b9f6d52300ab172ffbc2f04599a09f71e33756546b9c09e6b97469c5",
+      "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/22832.png",
+      "source_512_sha256": "1506919152ccbca7c58a5f6ad49b6ecee9cd6d9df66174b08f6017ad7d546da1",
+      "source_face_embedding_sha256": "b34e8e9e53db2b699832a15774e4680160b80fd4b40650cd166cdc4805ead347",
+      "det_score": 0.8261597156524658,
+      "face_area_fraction": 0.31824754982452097,
+      "pose_yaw_pitch_roll": [
+        2.4654007,
+        2.7439957,
+        1.0609741
+      ],
+      "status": "reserve",
+      "review": {
+        "method": "automated_proxy_only",
+        "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
+        "human_visual_review": "pending"
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "protocol_id": "crossinit_disen_formal_v1_20261119",
+  "scope": "local_plan_and_fixed_assets_before_server_implementation",
+  "not_a_server_run_lock": true,
+  "files": [
+    {
+      "path": "CrossInit_DisenBooth_4090正式实验完整执行计划_20261119.md",
+      "bytes": 43756,
+      "sha256": "cb4ecd838380b846bf01b246337cbc8891fd59922e674a9f5d248d93c673eb52"
+    },
+    {
+      "path": "crossinit-loc/experiments/disen_formal_v1/protocol.json",
+      "bytes": 8187,
+      "sha256": "c01e4e5c17dddf4d4d8cbf7a8c884daf898d177a7debc77bab58403abf184aea"
+    },
+    {
+      "path": "crossinit-loc/experiments/disen_formal_v1/prompts.jsonl",
+      "bytes": 3709,
+      "sha256": "23b435c899b20a60c9ea687afda6a0e62d619b1c8ed35a3034c70825ac216a0d"
+    },
+    {
+      "path": "crossinit-loc/experiments/disen_formal_v1/human_rubric.json",
+      "bytes": 1861,
+      "sha256": "3fa075091db2a99fcccb6c830e060784174ff517a2f7dba867b41b6cb00523fc"
+    },
+    {
+      "path": "crossinit-loc/experiments/disen_formal_v1/requirements-extra.txt",
+      "bytes": 77,
+      "sha256": "6781284d28b012a83217b0ce79a8410938868da63668bb81a12daa12bc880082"
+    },
+    {
+      "path": "crossinit-loc/experiments/disen_formal_v1/requirements-eval-cpu.txt",
+      "bytes": 199,
+      "sha256": "25f0f4842d5637ad368ea04e241d9a7633dfbd6e28c03fdd2d7b736c63be43ac"
+    },
+    {
+      "path": "crossinit-loc/third_party/official/textual_inversion_dataset.py",
+      "bytes": 6172,
+      "sha256": "ed2f259645ddd9922463513ec8c1c37c079df18c387caa10e2c9b1fb5dede58d"
+    },
+    {
+      "path": "crossinit-loc/third_party/official/examples/wiki_names_v2.txt",
+      "bytes": 9260,
+      "sha256": "e37ec819e5225b627ef24ae3357314ca775e5eab00844392a6234903a8f4e303"
+    }
+  ]
+}

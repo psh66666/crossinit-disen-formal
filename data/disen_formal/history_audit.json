@@ -1,0 +1,112 @@
+{
+  "historical_ids": [
+    167,
+    173,
+    451,
+    718,
+    1036,
+    1598,
+    1798,
+    1827,
+    1851,
+    1941,
+    2471,
+    2476,
+    2565,
+    3790,
+    5805,
+    8718,
+    9030,
+    9324,
+    9980
+  ],
+  "sources": {
+    "/root/autodl-tmp/crossinit-loc/data/identities_dryrun.json": [
+      167,
+      173,
+      718,
+      1036,
+      1598,
+      1798,
+      1827,
+      1941
+    ],
+    "/root/autodl-tmp/crossinit-loc/data/identities.json": [
+      167,
+      173,
+      451,
+      718,
+      1036,
+      1598,
+      1798,
+      1827
+    ],
+    "/root/autodl-tmp/crossinit-loc/data/identities_formal_v2.json": [
+      167,
+      451,
+      1851,
+      2476,
+      3790,
+      5805,
+      9324,
+      9980
+    ],
+    "/root/autodl-tmp/crossinit-loc/data/identities_trial_core.json": [
+      1851,
+      2471,
+      2476,
+      3790,
+      5805,
+      8718,
+      9324,
+      9980
+    ],
+    "/root/autodl-tmp/crossinit-loc/data/identities_trial_car.json": [
+      1851,
+      2471,
+      2476,
+      2565,
+      3790,
+      5805,
+      8718,
+      9030,
+      9324,
+      9980
+    ]
+  },
+  "historical_persons": [
+    403,
+    490,
+    760,
+    1264,
+    1595,
+    3100,
+    3135,
+    3196,
+    4429,
+    4513,
+    5573,
+    6151,
+    6494,
+    6725,
+    7251,
+    7421,
+    8263,
+    8867,
+    9457
+  ],
+  "selected_persons": [
+    458,
+    6581,
+    446,
+    4364,
+    8810,
+    1368,
+    6372,
+    5343,
+    1844,
+    987
+  ],
+  "overlap": [],
+  "note": "Protocol exclusions were applied before selection; this audit adds image ids found in the old project processed/identities files. Empty overlap means no reselection was needed."
+}

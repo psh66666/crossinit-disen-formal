@@ -1,0 +1,44 @@
+{
+  "B_microsteps": 40,
+  "adapter_grad_nonzero": true,
+  "checkpoint_roundtrip": {
+    "pass": true
+  },
+  "effects_not_evaluated": true,
+  "image_id": "25211",
+  "job_returncodes": {
+    "A": 0,
+    "B": 0,
+    "D": 0,
+    "L": 0
+  },
+  "lora_grad_nonzero": true,
+  "metrics_rows": {
+    "A": 10,
+    "B": 10,
+    "D": 10,
+    "L": 10
+  },
+  "peak_reserved_gib": 4.387,
+  "rng_aligned_LDA": true,
+  "sec_per_update": {
+    "A": 0.14484999999999998,
+    "B": 0.3370800000000001,
+    "D": 0.22959000000000002,
+    "L": 0.13838
+  },
+  "status": "PASS",
+  "token_row_grad_equivalence": {
+    "max_abs_grad_diff": 0.0,
+    "non_token_max_abs_grad": 0.26225748658180237,
+    "other_rows_frozen_in_trainer": true,
+    "pass": true
+  },
+  "updates_per_group": 10,
+  "uses_engineering_B0_parent": true,
+  "zero_lora": {
+    "identical_init_mismatch": 0.0,
+    "pass": true,
+    "zero_lora_max_abs_diff": 0.0
+  }
+}

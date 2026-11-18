@@ -1,0 +1,47 @@
+{
+  "cuda": "12.1",
+  "cudnn": 8902,
+  "data": {
+    "attributes": "/root/autodl-tmp/data_raw/CelebAMask-HQ/CelebAMask-HQ-attribute-anno.txt",
+    "attributes_sha256": "ec5e4bb1af5cac97612e4a92ba25b658f17bf50af02469fd654e9f304b0dd66c",
+    "identity": "/root/autodl-tmp/crossinit-disen-formal/data/annotations/identity_CelebA.txt",
+    "identity_sha256": "ac9012d939f9bde0e8f7f32a9ebdf64850ffc09f6e8e97207e919eb35daa4fde",
+    "image_count": 30000,
+    "mapping": "/root/autodl-tmp/data_raw/CelebAMask-HQ/CelebA-HQ-to-CelebA-mapping.txt",
+    "mapping_sha256": "d8d43deb196384cc086233d133624ce2f55f1c41300e91d865f2aa3c24f3614a",
+    "pose": "/root/autodl-tmp/data_raw/CelebAMask-HQ/CelebAMask-HQ-pose-anno.txt",
+    "pose_sha256": "8633b14c46f51e2586e110222379561c8dc0ce0ec866f862565c7fd9e3b8b4ca"
+  },
+  "gpu": [
+    {
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 4090",
+      "total_memory_bytes": 25250627584
+    }
+  ],
+  "hardware": {
+    "cpu_count": 128,
+    "machine": "x86_64",
+    "nvidia_smi": [
+      "NVIDIA GeForce RTX 4090, 24564 MiB, 580.105.08"
+    ],
+    "platform": "Linux-5.15.0-94-generic-x86_64-with-glibc2.35",
+    "processor": "x86_64"
+  },
+  "history_model_source": null,
+  "history_model_sources": [],
+  "model": {
+    "hashes": {
+      "model_index.json": "518553e098fdaa4153d9a92139e344e44f53bb329c22f383293e3099c4f1bad2",
+      "unet/diffusion_pytorch_model.bin": "da861650fc7df96390abffcbb9bcf67b7c5566422fda5af9bc003605be65c5f3",
+      "vae/diffusion_pytorch_model.bin": "44915add42092106e70bffac475aae4283b5e8167a8a0c5f55ccc667ee4ebeb5",
+      "vae/diffusion_pytorch_model.safetensors": "a1d993488569e928462932c8c38a0760b874d166399b14414135bd9c42df5815"
+    },
+    "model_index_sha256": "518553e098fdaa4153d9a92139e344e44f53bb329c22f383293e3099c4f1bad2",
+    "path": "/root/autodl-tmp/crossinit-disen-formal/models/sd2-1-base",
+    "resolved": "/root/autodl-tmp/models/sd2-1-base"
+  },
+  "protocol_id": "crossinit_disen_formal_v1_20261119",
+  "python": "3.10.22 (main, Oct 29 2026, 20:33:25) [GCC 14.3.0]",
+  "torch": "2.1.2+cu121"
+}

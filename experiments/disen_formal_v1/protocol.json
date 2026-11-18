@@ -1,0 +1,327 @@
+{
+  "protocol_id": "crossinit_disen_formal_v1_20261119",
+  "status": "execution_specification_requires_implementation",
+  "formal_without_effect_pilot": true,
+  "remote_root": "/root/autodl-tmp/crossinit-disen-formal",
+  "source": {
+    "crossinit_commit": "0b1e39a6740a0152ad78a07b5ef99c9967687ad1",
+    "disenbooth_commit": "9956ab681dbed91efdb70f9305ce43f018fa7978"
+  },
+  "model": {
+    "local_dir": "models/sd2-1-base",
+    "must_match_previously_used_sd21_weights": true,
+    "resolution": 512,
+    "text_hidden_size": 1024,
+    "unet_dtype": "bfloat16",
+    "trainable_dtype": "float32",
+    "vae_cache_dtype": "float32",
+    "xformers": false,
+    "gradient_checkpointing_default": false,
+    "lora_scale": 1
+  },
+  "data": {
+    "dataset": "CelebAMask-HQ/CelebA-HQ",
+    "formal_persons": 8,
+    "reserve_persons": 2,
+    "images_per_person": 1,
+    "selection_seed": 20261119,
+    "excluded_image_ids": [
+      167,
+      451,
+      8718,
+      2471,
+      9030,
+      2565,
+      1851,
+      2476,
+      9980,
+      5805,
+      3790,
+      9324
+    ],
+    "exclude_matching_celeba_person_id": true,
+    "source_detection_score_min": 0.8,
+    "source_face_area_fraction_min": 0.06,
+    "source_face_area_fraction_max": 0.5,
+    "manual_front_face_review": true,
+    "near_duplicate_arcface_cosine_threshold": 0.65,
+    "resize": "PIL_BICUBIC_512x512",
+    "manual_masks_required": false
+  },
+  "baseline": {
+    "group": "B",
+    "optimizer_updates": 320,
+    "micro_batch": 1,
+    "gradient_accumulation": 4,
+    "micro_steps": 1280,
+    "learning_rate": 0.005,
+    "lr_schedule": "constant",
+    "warmup_steps": 0,
+    "weight_decay": 0.01,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "reg_weight": 1e-05,
+    "reg_form": "official_non_squared_pairwise_distance_mean",
+    "flip_probability": 0.5,
+    "templates": "official_imagenet_templates_small_81_preserve_order_and_duplicates",
+    "text_template": "face of {tokens} person",
+    "train_seed": 20261119,
+    "checkpoints": [
+      80,
+      160,
+      240,
+      320
+    ],
+    "final_checkpoint": 320
+  },
+  "adaptation": {
+    "groups": [
+      "L",
+      "D",
+      "A"
+    ],
+    "parent_checkpoint": "B/320_of_same_person",
+    "frozen_parent_tokens": true,
+    "optimizer_updates": 2000,
+    "micro_batch": 1,
+    "gradient_accumulation": 1,
+    "learning_rate": 0.0001,
+    "lr_schedule": "constant",
+    "warmup_steps": 0,
+    "weight_decay": 0.01,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "lora_rank": 4,
+    "lora_alpha": 4,
+    "lora_dropout": 0,
+    "lora_targets": [
+      "attn1.to_q",
+      "attn1.to_k",
+      "attn1.to_v",
+      "attn1.to_out.0",
+      "attn2.to_q",
+      "attn2.to_k",
+      "attn2.to_v",
+      "attn2.to_out.0"
+    ],
+    "all_attention_resolutions": true,
+    "image_adapter_hidden_size": 1024,
+    "adapter_mask_init": 0,
+    "adapter_mlp": "Linear1024_ReLU_Linear1024_plus_masked_feature",
+    "clip_image_model": "ViT-H-14",
+    "clip_image_pretrained": "laion2b_s32b_b79k",
+    "clip_image_precision": "fp32",
+    "clip_feature_preprocess": "disenbooth_official_resize224_bilinear_from_sd_minus1_plus1_no_extra_normalization",
+    "clip_encode_image_normalize": false,
+    "clip_feature_cache_views": 1,
+    "caption": "a photo of a {tokens} person",
+    "flip_probability": 0,
+    "random_crop": false,
+    "prior_preservation": false,
+    "min_snr_weighting": false,
+    "train_text_encoder": false,
+    "train_seed": 20261120,
+    "init_seed": 20261121,
+    "lora_grad_clip": 1,
+    "adapter_grad_clip": null,
+    "sequential_backward": true,
+    "checkpoints": [
+      500,
+      1000,
+      1500,
+      2000
+    ],
+    "final_checkpoint": 2000,
+    "timestep_sampling": "uniform_integer_0_to_scheduler_num_train_timesteps_exclusive"
+  },
+  "group_losses": {
+    "L": {
+      "precise_condition": "c",
+      "precise_weight": 1,
+      "weak_weight": 0,
+      "contrastive_weight": 0,
+      "image_adapter": false
+    },
+    "D": {
+      "precise_condition": "c+u",
+      "precise_weight": 1,
+      "weak_weight": 0.01,
+      "contrastive_weight": 0.001,
+      "image_adapter": true
+    },
+    "A": {
+      "precise_condition": "c+u",
+      "precise_weight": 1,
+      "weak_weight": 0,
+      "contrastive_weight": 0.001,
+      "image_adapter": true
+    }
+  },
+  "generation": {
+    "groups": [
+      "B",
+      "L",
+      "D",
+      "A"
+    ],
+    "prompt_count": 8,
+    "seeds": [
+      101,
+      202
+    ],
+    "images_per_group": 128,
+    "total_images": 512,
+    "num_inference_steps": 50,
+    "guidance_scale": 7.5,
+    "negative_prompt": "",
+    "scheduler": "DPMSolverMultistepScheduler",
+    "algorithm_type": "dpmsolver++",
+    "solver_order": 2,
+    "use_karras_sigmas": false,
+    "timestep_spacing": "linspace",
+    "solver_type": "midpoint",
+    "lora_scale": 1,
+    "adapter_at_inference": false,
+    "paired_initial_latents": true,
+    "batch_size": 1,
+    "face_restoration": false
+  },
+  "evaluation": {
+    "arcface_model": "buffalo_l",
+    "detector_size": [
+      640,
+      640
+    ],
+    "det_thresh": 0.5,
+    "min_face_area_fraction": 0.02,
+    "target_face": "largest_qualified_face_then_nearest_center_then_lexicographic_box",
+    "missing_or_invalid_face_identity_score": 0,
+    "clip_model": "openai/clip-vit-large-patch14",
+    "clip_score": "normalized_feature_cosine_unscaled",
+    "scene_prompt_ids": [
+      "p05",
+      "p06",
+      "p07",
+      "p08"
+    ],
+    "scene_margin": "target_scene_cosine_minus_mean_other_three",
+    "both_face_area_ratio_interval": [
+      0.8,
+      1.25
+    ],
+    "bootstrap_unit": "person",
+    "bootstrap_samples": 20000,
+    "bootstrap_seed": 20261119,
+    "primary_comparisons": [
+      "D-B",
+      "L-B"
+    ],
+    "primary_metric": "ArcFace_zero_all_prompts",
+    "familywise_interval_percent": 97.5,
+    "secondary_comparisons": [
+      "D-L",
+      "D-A"
+    ],
+    "secondary_interval_percent": 95,
+    "identity_practical_delta": 0.02,
+    "editing_guardrail_delta": -0.1,
+    "detection_guardrail_delta": -0.05,
+    "positive_person_count_support": 6
+  },
+  "human": {
+    "raters": 1,
+    "comparisons": [
+      {
+        "left": "D",
+        "right": "B",
+        "prompts": "all_8",
+        "seed": 101,
+        "pairs": 64
+      },
+      {
+        "left": "L",
+        "right": "B",
+        "prompts": "all_8",
+        "seed": 101,
+        "pairs": 64
+      },
+      {
+        "left": "D",
+        "right": "L",
+        "prompts": [
+          "p03",
+          "p04",
+          "p05",
+          "p06"
+        ],
+        "seed": 101,
+        "pairs": 32
+      }
+    ],
+    "unique_pairs": 160,
+    "repeat_pairs": 16,
+    "repeat_task_ids": "uniformly_sample_from_160_with_seed_20261122",
+    "total_tasks": 176,
+    "blind_seed": 20261122,
+    "fields": [
+      "identity_preference_A_B_tie",
+      "edit_success_A_yes_no",
+      "edit_success_B_yes_no",
+      "severe_artifact_A_yes_no",
+      "severe_artifact_B_yes_no",
+      "joint_preference_A_B_tie"
+    ],
+    "human_editing_guardrail_prompts": [
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08"
+    ],
+    "target_face_audit": "all_multiface_and_edge_flagged_outputs_before_method_unblinding",
+    "no_human_score_groups": [
+      "A"
+    ]
+  },
+  "execution": {
+    "group_order_alternates_by_person_position": [
+      [
+        "L",
+        "D",
+        "A"
+      ],
+      [
+        "A",
+        "D",
+        "L"
+      ]
+    ],
+    "no_metric_based_early_stopping": true,
+    "resource_check_updates_per_group": 10,
+    "resource_check_outputs_discarded": true,
+    "max_reserved_gib": 22,
+    "max_nan_or_oom_same_step_retries": 1,
+    "no_adaptive_hyperparameter_search": true,
+    "engineering_parent_step": 0,
+    "formal_parent_step_required": 320,
+    "engineering_parent_is_cross_initialization_untrained": true
+  },
+  "expected_counts": {
+    "formal_source_images": 8,
+    "total_training_jobs": 32,
+    "baseline_jobs": 8,
+    "adaptation_jobs": 24,
+    "baseline_microsteps_all_persons": 10240,
+    "adaptation_updates_all_persons": 48000,
+    "total_optimizer_updates": 50560,
+    "total_generation_images": 512,
+    "human_tasks": 176
+  }
+}
