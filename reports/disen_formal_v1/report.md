@@ -73,9 +73,7 @@ D−B 的身份收益并不是无代价的：全句 CLIP Δ=-0.0442、场景 mar
 
 固定正文图使用人物顺序第 1/3/5/7 人、p03/p04/p05/p08、seed101，共 16 组，不按效果挑选；完整网格在 `results/disen_formal_v1/grids/`。诊断图 `db_identity_extremes.png` 只展示 D−B 身份差最好/最差的各两个键，不替代完整网格。
 
-![main fixed grid](results/disen_formal_v1/grids/main_fixed_16_compact.png)
 
-![training curves](results/disen_formal_v1/figures/training_curves.png)
 
 ## 6. 消融、失败与限制
 
@@ -90,9 +88,7 @@ D−B 的身份收益并不是无代价的：全句 CLIP Δ=-0.0442、场景 mar
 - D−A 的弱去噪消融只解释该实现中的一个权重 0.01 项；它不证明 DisenBooth 的另一条对比目标无效，也不证明其他 rank、学习率或训练步数不会更好。本轮不追加这些搜索。
 - 场景四分类在 B 上接近 1.00 而 L 上只有 0.23，这个幅度也可能部分来自 B 图像本身更接近源图背景；因此报告把场景 margin/CLIP/人工编辑一起看，不把四分类单独当成“编辑能力”的唯一定义。
 
-![per-person arcface delta](results/disen_formal_v1/figures/per_person_arcface_delta.png)
 
-![identity vs detection](results/disen_formal_v1/figures/identity_vs_detection.png)
 
 **为什么仍然值得报告：**这轮不是“正号才报告”的筛选。它给出了一个可复查的受控事实：CrossInit 条件上继续训练 LoRA 能明显提高身份，但会牺牲文本编辑/场景；加入 DisenBooth 图像分支与目标能把场景损失补回一部分，代价是身份额外增益不再可靠。这比只报一个漂亮 demo 更接近课程项目要的训练单元验证。
 
