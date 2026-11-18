@@ -1,0 +1,15 @@
+# Evaluation extras. Architecture-specific; install after requirements.txt.
+# If onnxruntime-gpu does not match the host CUDA, use `onnxruntime` (CPU) instead.
+insightface==0.7.3
+onnxruntime-gpu==1.17.1
+onnx==1.16.0
+opencv-python-headless==4.9.0.80
+scikit-image==0.22.0
+scikit-learn==1.4.2
+albumentations==1.3.1
+easydict==1.13
+prettytable==3.10.0
+Cython==3.0.10
+
+# Only needed by the optional upstream CrossInitialization sanity script.
+tensorboard==2.15.2
