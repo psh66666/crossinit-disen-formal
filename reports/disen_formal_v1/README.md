@@ -32,7 +32,7 @@ This directory is the deliverable for the 2026-11-19 formal matrix.
 
 ## What is inside
 
-- `report.md` / `report.pdf`: 7-page report (references included).
+- `report.md` / `report.pdf`: 6–8 page report.
 - `slides.pdf` / `slides.md`: 8–10 page talk deck.
 - `contribution.md`: single-person contribution and AI-assistance disclosure.
 - `results/disen_formal_v1/`:
@@ -43,8 +43,8 @@ This directory is the deliverable for the 2026-11-19 formal matrix.
   - `conclusion.md` — pre-registered interpretation, including N/A human fields.
   - `figures/` — training curves, per-person deltas, scatter.
   - `grids/` — fixed 16-group sheet and full 8×8×2 grids.
-  - `blind/index.html` + `key.json` + `ratings.csv` — 176 blind tasks; the single human
-    rater is still completing the labels, so human columns remain N/A in this snapshot.
+  - `blind/index.html` + `key.json` + `ratings.csv` — 176 blind tasks; the empty
+    ratings file means human review was **not** completed by the executor.
 - `runs/disen_formal_v1/<image_id>/<B|L|D|A>/` — config, logs, metrics, final
   checkpoints; optimizer/RNG checkpoints are included in the full archive.
 - `runs/disen_formal_v1/generated/manifest.jsonl` — all 512 image keys, hashes,
