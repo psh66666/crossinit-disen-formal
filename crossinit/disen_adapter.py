@@ -79,10 +79,12 @@ class ImageAdapter(nn.Module):
 
 
 def contrastive_cosine(c: torch.Tensor, u: torch.Tensor) -> torch.Tensor:
-    """Official term: negative cosine is minimised, i.e. c and u aligned.
+    """Cosine term used with a positive weight, i.e. c and u are pushed apart.
 
     c: [B,77,1024], u: [B,1,1024].  Mean over the 77 text positions; no padding
-    mask, matching the released implementation.
+    mask, matching the released implementation.  The loss adds
+    ``+0.001 * cosine(c.mean(1), u)``, so optimisation lowers this similarity;
+    it is a disentanglement/contrast term, not an alignment term.
     """
     return F.cosine_similarity(c.mean(dim=1), u.squeeze(1), dim=-1).mean()
 

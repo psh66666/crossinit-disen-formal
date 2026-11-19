@@ -1,0 +1,11 @@
+image_id,status,old_person_id_from_orig_idx,correct_person_id,orig_idx,orig_file,changed
+25211,formal,458,7803,137122,137123.jpg,True
+15268,formal,6581,8857,107549,107550.jpg,True
+1896,formal,446,5884,62290,062291.jpg,True
+13069,formal,4364,5601,46035,046036.jpg,True
+7616,formal,8810,69,44116,044117.jpg,True
+6802,formal,1368,6681,90444,090445.jpg,True
+23893,formal,6372,5185,200131,200132.jpg,True
+23493,formal,5343,66,84986,084987.jpg,True
+22865,reserve,1844,3696,51514,051515.jpg,True
+22832,reserve,987,416,136034,136035.jpg,True

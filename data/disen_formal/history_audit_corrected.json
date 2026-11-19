@@ -1,0 +1,192 @@
+{
+  "historical_ids": [
+    167,
+    173,
+    451,
+    718,
+    1036,
+    1598,
+    1798,
+    1827,
+    1851,
+    1941,
+    2471,
+    2476,
+    2565,
+    3790,
+    5805,
+    8718,
+    9030,
+    9324,
+    9980
+  ],
+  "historical_rows": [
+    {
+      "image_id": 167,
+      "orig_idx": 151694,
+      "orig_file": "151695.jpg",
+      "correct_person_id": 1239,
+      "old_person_id_from_orig_idx": 1595
+    },
+    {
+      "image_id": 173,
+      "orig_idx": 33653,
+      "orig_file": "033654.jpg",
+      "correct_person_id": 8898,
+      "old_person_id_from_orig_idx": 4429
+    },
+    {
+      "image_id": 451,
+      "orig_idx": 185312,
+      "orig_file": "185313.jpg",
+      "correct_person_id": 6551,
+      "old_person_id_from_orig_idx": 8263
+    },
+    {
+      "image_id": 718,
+      "orig_idx": 63894,
+      "orig_file": "063895.jpg",
+      "correct_person_id": 6665,
+      "old_person_id_from_orig_idx": 4513
+    },
+    {
+      "image_id": 1036,
+      "orig_idx": 144366,
+      "orig_file": "144367.jpg",
+      "correct_person_id": 4103,
+      "old_person_id_from_orig_idx": 1264
+    },
+    {
+      "image_id": 1598,
+      "orig_idx": 13946,
+      "orig_file": "013947.jpg",
+      "correct_person_id": 7181,
+      "old_person_id_from_orig_idx": 6725
+    },
+    {
+      "image_id": 1798,
+      "orig_idx": 13299,
+      "orig_file": "013300.jpg",
+      "correct_person_id": 6865,
+      "old_person_id_from_orig_idx": 3100
+    },
+    {
+      "image_id": 1827,
+      "orig_idx": 2975,
+      "orig_file": "002976.jpg",
+      "correct_person_id": 7951,
+      "old_person_id_from_orig_idx": 760
+    },
+    {
+      "image_id": 1851,
+      "orig_idx": 114151,
+      "orig_file": "114152.jpg",
+      "correct_person_id": 4133,
+      "old_person_id_from_orig_idx": 403
+    },
+    {
+      "image_id": 1941,
+      "orig_idx": 37942,
+      "orig_file": "037943.jpg",
+      "correct_person_id": 7181,
+      "old_person_id_from_orig_idx": 3196
+    },
+    {
+      "image_id": 2471,
+      "orig_idx": 53999,
+      "orig_file": "054000.jpg",
+      "correct_person_id": 9277,
+      "old_person_id_from_orig_idx": 3135
+    },
+    {
+      "image_id": 2476,
+      "orig_idx": 140633,
+      "orig_file": "140634.jpg",
+      "correct_person_id": 1938,
+      "old_person_id_from_orig_idx": 6151
+    },
+    {
+      "image_id": 2565,
+      "orig_idx": 193343,
+      "orig_file": "193344.jpg",
+      "correct_person_id": 10102,
+      "old_person_id_from_orig_idx": 7251
+    },
+    {
+      "image_id": 3790,
+      "orig_idx": 35811,
+      "orig_file": "035812.jpg",
+      "correct_person_id": 6282,
+      "old_person_id_from_orig_idx": 490
+    },
+    {
+      "image_id": 5805,
+      "orig_idx": 144316,
+      "orig_file": "144317.jpg",
+      "correct_person_id": 768,
+      "old_person_id_from_orig_idx": 5573
+    },
+    {
+      "image_id": 8718,
+      "orig_idx": 158255,
+      "orig_file": "158256.jpg",
+      "correct_person_id": 8121,
+      "old_person_id_from_orig_idx": 9457
+    },
+    {
+      "image_id": 9030,
+      "orig_idx": 73696,
+      "orig_file": "073697.jpg",
+      "correct_person_id": 3625,
+      "old_person_id_from_orig_idx": 8867
+    },
+    {
+      "image_id": 9324,
+      "orig_idx": 198545,
+      "orig_file": "198546.jpg",
+      "correct_person_id": 7712,
+      "old_person_id_from_orig_idx": 6494
+    },
+    {
+      "image_id": 9980,
+      "orig_idx": 191569,
+      "orig_file": "191570.jpg",
+      "correct_person_id": 5383,
+      "old_person_id_from_orig_idx": 7421
+    }
+  ],
+  "historical_persons_correct": [
+    768,
+    1239,
+    1938,
+    3625,
+    4103,
+    4133,
+    5383,
+    6282,
+    6551,
+    6665,
+    6865,
+    7181,
+    7712,
+    7951,
+    8121,
+    8898,
+    9277,
+    10102
+  ],
+  "selected_persons_correct": [
+    7803,
+    8857,
+    5884,
+    5601,
+    69,
+    6681,
+    5185,
+    66,
+    3696,
+    416
+  ],
+  "overlap": [],
+  "note": "Corrected with orig_file. The original exclusion used orig_idx and was ineffective as a person filter; the post-hoc audit finds no actual overlap."
+}

@@ -1,0 +1,59 @@
+{
+  "all_d": {
+    "status": "complete",
+    "D-B-joint": 1.0,
+    "D-B-identity": 1.0,
+    "D-L-joint": 1.0,
+    "D-L-identity": 1.0,
+    "D-B-pairs": 64,
+    "L-B-pairs": 64,
+    "D-L-pairs": 32,
+    "repeat_joint": 1.0,
+    "unique_images": 192,
+    "edit_n": {
+      "B": 48,
+      "L": 48,
+      "D": 48
+    }
+  },
+  "all_tie": {
+    "B-D": 0.5,
+    "B-L": 0.5,
+    "D-L": 0.5
+  },
+  "mirror": {
+    "B-D-identity": [
+      1.0,
+      1.0
+    ],
+    "B-D-joint": [
+      1.0,
+      1.0
+    ],
+    "B-L-identity": [
+      1.0,
+      1.0
+    ],
+    "B-L-joint": [
+      1.0,
+      1.0
+    ],
+    "D-L-identity": [
+      1.0,
+      1.0
+    ],
+    "D-L-joint": [
+      1.0,
+      1.0
+    ]
+  },
+  "completeness": {
+    "empty": "empty",
+    "partial": [
+      "partial",
+      false
+    ]
+  },
+  "identity_used": 0.5,
+  "status": "PASS"
+}

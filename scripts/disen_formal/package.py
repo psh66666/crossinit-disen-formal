@@ -71,7 +71,8 @@ def main() -> None:
         counts["data_meta"] = 0
         for rel in ("identities.json", "candidate_inventory.csv", "candidate_pool.json",
                     "candidate_order.json", "source_review.json", "source_review.png",
-                    "history_audit.json", "celeb_init_691.pt", "random_plans"):
+                    "history_audit.json", "history_audit_corrected.json", "person_id_mapping_audit.csv",
+                    "celeb_init_691.pt", "random_plans"):
             p = ROOT / "data" / "disen_formal" / rel
             if p.is_file():
                 tar.add(p, arcname=f"{arcroot}/data/disen_formal/{rel}"); counts["data_meta"] += 1

@@ -19,6 +19,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.disen_formal.common import formal_identities, prompts, protocol, write_json
+from scripts.disen_formal.human_eval import human_summary
 
 METRICS = ["arcface", "target", "target_area", "full_clip", "attr_clip",
            "scene_margin", "scene_acc"]
@@ -62,62 +63,6 @@ def training_stats(group: str) -> dict:
         params.append(2048 if group == "B" else
                       int(meta.get("lora_parameters", 0)) + int(meta.get("adapter_parameters", 0)))
     return {"train_seconds_mean": mean(secs), "trainable_params": int(max(params) if params else 0)}
-
-
-def human_summary(ratings_path: Path, key_path: Path) -> dict:
-    if not ratings_path.exists() or not key_path.exists():
-        return {"available": False, "reason": "ratings.csv or key.json missing"}
-    rows = read_csv(ratings_path)
-    filled = [r for r in rows if any(str(v).strip() for k, v in r.items() if k != "task_id")]
-    if not filled:
-        return {"available": False, "reason": "ratings.csv is empty (human review not completed)"}
-    key = json.loads(key_path.read_text(encoding="utf-8"))["tasks"]
-    pref = defaultdict(lambda: [0, 0, 0])  # comparison -> wins/loss/ties for first group
-    edit = defaultdict(lambda: [0, 0])
-    artifact = defaultdict(lambda: [0, 0])
-    repeats = {}
-    for r in filled:
-        tid = r["task_id"]
-        k = key[tid]
-        groups = k["groups"]
-        comp = tuple(sorted(groups.values()))
-        first = groups["A"]
-        jp = r.get("joint_preference", "").strip()
-        if jp in {"A", "B", "tie"}:
-            side = groups[jp] if jp in groups else None
-            if side is None:
-                pref[comp][2] += 1
-            elif side == first:
-                pref[comp][0] += 1
-            else:
-                pref[comp][1] += 1
-        for side in ("A", "B"):
-            g = groups[side]
-            e = r.get(f"edit_success_{side}", "").strip().lower()
-            if e in {"yes", "no"}:
-                edit[g][0 if e == "yes" else 1] += 1
-            a = r.get(f"severe_artifact_{side}", "").strip().lower()
-            if a in {"yes", "no"}:
-                artifact[g][0 if a == "yes" else 1] += 1
-        if k.get("repeat_of"):
-            repeats.setdefault(k["repeat_of"], []).append(jp)
-    agreement = []
-    for _, vals in repeats.items():
-        if len(vals) >= 2 and all(vals):
-            agreement.append(len(set(vals)) == 1)
-    human = {
-        "available": True,
-        "n_filled": len(filled),
-        "joint_preference": {"-".join(sorted(c)): {"wins_first": w, "wins_second": l,
-                                                    "ties": t}
-                              for c, (w, l, t) in pref.items()},
-        "edit_success": {g: {"yes": y, "no": n, "rate": y / max(1, y + n)}
-                         for g, (y, n) in edit.items()},
-        "severe_artifact": {g: {"yes": y, "no": n, "rate": y / max(1, y + n)}
-                            for g, (y, n) in artifact.items()},
-        "repeat_agreement": mean(agreement) if agreement else None,
-    }
-    return human
 
 
 def sheet(rows, out: Path, title: str, columns: list[str], cell: int = 210):
@@ -210,6 +155,7 @@ def main() -> None:
     def area_pred(r):
         return int(fnum(r.get("target"), 0)) == 1
     comp_rows = []
+    subset_counts = {}
     for name, a, b, level in comparisons:
         for metric in METRICS:
             d = comp_deltas(a, b, metric)
@@ -218,9 +164,10 @@ def main() -> None:
             comp_rows.append({"comparison": name, "metric": metric,
                               "mean_delta": f"{np.nanmean(d):.8f}", "ci_low": f"{lo:.8f}",
                               "ci_high": f"{hi:.8f}", "level": level,
-                              "n_persons": len(ids), "positive_persons": int(np.nansum(d > 0))})
+                              "n_persons": len(ids), "n_pairs": len(ids) * len(pid_order) * len(seeds),
+                              "positive_persons": int(np.nansum(d > 0))})
         # Both-target subset for identity.
-        d = []
+        d, both_counts = [], []
         for image_id in ids:
             pairs = []
             for p in pid_order:
@@ -228,6 +175,7 @@ def main() -> None:
                     ra, rb = by[(image_id, a, p, s)], by[(image_id, b, p, s)]
                     if both_pred(ra) and both_pred(rb):
                         pairs.append(fnum(ra["arcface"]) - fnum(rb["arcface"]))
+            both_counts.append(len(pairs))
             d.append(mean(pairs))
         arr = np.asarray(d, dtype=np.float64)
         lo, hi = boot_ci(arr[~np.isnan(arr)], int(proto["evaluation"]["bootstrap_samples"]),
@@ -235,9 +183,9 @@ def main() -> None:
         comp_rows.append({"comparison": name, "metric": "arcface_both_target",
                           "mean_delta": f"{np.nanmean(arr):.8f}", "ci_low": f"{lo:.8f}",
                           "ci_high": f"{hi:.8f}", "level": level, "n_persons": len(ids),
-                          "positive_persons": int(np.nansum(arr > 0))})
+                          "n_pairs": int(sum(both_counts)), "positive_persons": int(np.nansum(arr > 0))})
         lo_ratio, hi_ratio = proto["evaluation"]["both_face_area_ratio_interval"]
-        d = []
+        d, area_counts = [], []
         for image_id in ids:
             pairs = []
             for p in pid_order:
@@ -246,6 +194,7 @@ def main() -> None:
                     aa, ab = fnum(ra["target_area"]), fnum(rb["target_area"])
                     if both_pred(ra) and both_pred(rb) and ab > 0 and lo_ratio <= aa / ab <= hi_ratio:
                         pairs.append(fnum(ra["arcface"]) - fnum(rb["arcface"]))
+            area_counts.append(len(pairs))
             d.append(mean(pairs))
         arr2 = np.asarray(d, dtype=np.float64)
         valid = arr2[~np.isnan(arr2)]
@@ -257,23 +206,36 @@ def main() -> None:
         comp_rows.append({"comparison": name, "metric": "arcface_area_matched",
                           "mean_delta": f"{np.nanmean(arr2):.8f}", "ci_low": f"{lo:.8f}",
                           "ci_high": f"{hi:.8f}", "level": level, "n_persons": len(ids),
+                          "n_pairs": int(sum(area_counts)),
                           "positive_persons": int(np.nansum(arr2 > 0))})
+        subset_counts[name] = {
+            "both_target_total": int(sum(both_counts)),
+            "both_target_per_person": both_counts,
+            "area_matched_total": int(sum(area_counts)),
+            "area_matched_per_person": area_counts,
+            "total_pairs": len(ids) * len(pid_order) * len(seeds),
+        }
+    write_json(out / "subset_counts.json", subset_counts)
     with open(out / "comparisons.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(comp_rows[0])); w.writeheader(); w.writerows(comp_rows)
 
-    human = human_summary(Path(args.human), Path(args.key))
+    human = human_summary(Path(args.human), Path(args.key),
+                          int(proto["evaluation"]["bootstrap_samples"]),
+                          int(proto["evaluation"]["bootstrap_seed"]))
     write_json(out / "human_summary.json", human)
 
     # Main table.
     def fmt(v, nd=4):
         return "N/A" if v is None or (isinstance(v, float) and math.isnan(v)) else f"{v:.{nd}f}"
     lines = ["# 主表：B / L / D / A（最后检查点，512 张）", "",
-             "| group | ArcFace | 有效目标脸率 | 脸面积 | 全句CLIP | 属性CLIP | 场景margin | 场景四分类 | 编辑成功率 | 严重伪影率 | 训练秒/人 | 可训练参数 |",
+             "| group | ArcFace | 有效目标脸率 | 脸面积 | 全句CLIP | 属性CLIP | 场景margin | 场景四分类 | 编辑成功率(p03-p08) | 严重伪影率(p03-p08) | 训练秒/人 | 可训练参数 |",
              "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for g in ("B", "L", "D", "A"):
         m = group_means[g]
         e = human.get("edit_success", {}).get(g, {}).get("rate") if human.get("available") else None
         a = human.get("severe_artifact", {}).get(g, {}).get("rate") if human.get("available") else None
+        if e is not None and isinstance(e, float) and math.isnan(e): e = None
+        if a is not None and isinstance(a, float) and math.isnan(a): a = None
         lines.append(f"| {g} | {fmt(m['arcface'])} | {fmt(m['target'])} | {fmt(m['target_area'])} | "
                      f"{fmt(m['full_clip'])} | {fmt(m['attr_clip'])} | {fmt(m['scene_margin'])} | "
                      f"{fmt(m['scene_acc'])} | {'N/A' if e is None else f'{e:.3f}'} | "
@@ -311,6 +273,14 @@ def main() -> None:
     dl_arc, dl_lo = get("D-L", "arcface"), getci("D-L", "arcface")[0]
     da_arc = get("D-A", "arcface")
     da_lo = getci("D-A", "arcface")[0]
+    da_tgt = get("D-A", "target")
+    da_clip = get("D-A", "full_clip")
+    da_scene = get("D-A", "scene_margin")
+    da_sacc = get("D-A", "scene_acc")
+    db_both_n = next(int(r["n_pairs"]) for r in comp_rows
+                     if r["comparison"] == "D-B" and r["metric"] == "arcface_both_target")
+    db_match_n = next(int(r["n_pairs"]) for r in comp_rows
+                      if r["comparison"] == "D-B" and r["metric"] == "arcface_area_matched")
     edit_available = bool(human.get("available"))
     db_edit = None
     if edit_available:
@@ -320,33 +290,48 @@ def main() -> None:
     practical = float(proto["evaluation"]["identity_practical_delta"])
     guard_edit = float(proto["evaluation"]["editing_guardrail_delta"])
     guard_det = float(proto["evaluation"]["detection_guardrail_delta"])
-    edit_loss = (db_clip < -0.02) or (db_sacc < -0.05) or (db_edit is not None and db_edit < guard_edit)
-    if db_arc >= practical and db_lo > 0 and db_tgt >= guard_det and not edit_loss:
+    # These automatic thresholds are descriptive diagnostics, NOT the original
+    # pre-registered editing guardrail (which is the human p03-p08 difference).
+    auto_edit_loss = (db_clip < -0.02) or (db_sacc < -0.05)
+    human_edit_available = edit_available
+    if db_arc >= practical and db_lo > 0 and db_tgt >= guard_det and not auto_edit_loss \
+            and (db_edit is None or db_edit >= guard_edit):
         verdict = ("在本固定设置下，D 相对 B 的身份指标达到预设实际改善参考，"
-                   "自动场景/CLIP 未显示明显点估计损失；人工编辑仍未完成。")
-    elif db_arc > 0 and edit_loss:
-        verdict = ("D−B 身份指标明显上升且区间下界>0，但场景 margin、场景四分类和全句 CLIP 同时明显下降；"
-                   "按预注册属于身份—场景/编辑折中，不能写整体改善。")
+                   "自动场景/CLIP 未显示明显点估计损失"
+                   + ("；人工编辑差也未破预设护栏。" if human_edit_available else
+                      "；预注册人工编辑护栏仍未评估。"))
+    elif db_arc > 0 and (auto_edit_loss or (db_edit is not None and db_edit < guard_edit)):
+        verdict = ("D−B 身份指标明显上升且区间下界>0，但自动证据显示场景 margin、场景四分类和全句 CLIP "
+                   "同时明显下降。按预注册的解释边界，不能写整体改善；"
+                   + ("人工编辑差也达到预注册护栏的负向方向。" if human_edit_available and db_edit is not None and db_edit < guard_edit
+                      else "预注册的人工编辑成功率护栏尚未评估。"))
     elif db_arc > 0:
         verdict = "D−B 身份方向有利，但区间跨 0 或未达 +0.02 实际参考；不能称稳定或显著改善。"
     else:
         verdict = "D−B 身份没有可靠正向变化；本轮完成受控迁移与验证，不支持预期改善。"
     if db_area > 0.02 and db_arc > 0:
-        verdict += (f" 脸面积同时上升（Δ={db_area:+.4f}）；但双目标脸子集 ArcFace Δ={db_both:+.4f}、"
-                    f"脸面积比匹配子集 Δ={db_matched:+.4f}，说明身份增分不是仅由脸变大造成。")
+        verdict += (f" 脸面积同时上升（Δ={db_area:+.4f}）；双目标脸子集（{db_both_n}/128 对）"
+                    f"ArcFace Δ={db_both:+.4f}、脸面积比匹配子集（{db_match_n}/128 对）"
+                    f"Δ={db_matched:+.4f} 仍为正，但这些都是按生成结果筛选的辅助子集，"
+                    "样本少，不能排除构图、姿态、纹理质量和选择偏差。")
     concl = [
         "# 结论草稿（按预注册规则，2026-11-19）", "",
         f"- 主比较 D−B ArcFace：Δ={db_arc:+.6f}，97.5% 区间下界 {db_lo:+.6f}；"
-        f"双目标脸子集 {db_both:+.6f}；脸面积比匹配子集 {db_matched:+.6f}。",
+        f"双目标脸子集 {db_both:+.6f}（{db_both_n}/128 对）；"
+        f"脸面积比匹配子集 {db_matched:+.6f}（{db_match_n}/128 对）。",
         f"- D−B 编辑/场景自动指标：全句 CLIP Δ={db_clip:+.6f}，场景 margin Δ={db_scene:+.6f}，"
         f"场景四分类 Δ={db_sacc:+.6f}；目标脸率 Δ={db_tgt:+.6f}；脸面积 Δ={db_area:+.6f}。",
         f"- L−B ArcFace：Δ={lb_arc:+.6f}（97.5% 下界 {lb_lo:+.6f}）；全句 CLIP Δ={lb_clip:+.6f}；"
         f"场景 margin Δ={lb_scene:+.6f}；场景四分类 Δ={lb_sacc:+.6f}。",
         f"- 次比较 D−L：ArcFace Δ={dl_arc:+.6f}（95% 下界 {dl_lo:+.6f}）；"
-        f"场景 margin Δ={dl_scene:+.6f}；场景四分类 Δ={dl_sacc:+.6f}：LoRA 基础上加图像分支主要改善场景/编辑，"
-        "身份额外收益区间跨 0。",
-        f"- 次比较 D−A：ArcFace Δ={da_arc:+.6f}（95% 下界 {da_lo:+.6f}）：弱去噪项在该实现中作用有限。",
-        f"- 人工盲评：{'已填写 ' + str(human.get('n_filled')) + ' 题' if edit_available else '未完成（N/A）'}；"
+        f"场景 margin Δ={dl_scene:+.6f}；场景四分类 Δ={dl_sacc:+.6f}：整套 Disen 训练包"
+        "（adapter+弱去噪+对比项）相对普通 LoRA 恢复了一部分场景能力；"
+        "该比较不能把收益归给其中单项，身份额外收益区间跨 0。",
+        f"- 次比较 D−A：ArcFace Δ={da_arc:+.6f}（95% 下界 {da_lo:+.6f}）；目标脸率 Δ={da_tgt:+.6f}；"
+        f"全句 CLIP Δ={da_clip:+.6f}；场景 margin Δ={da_scene:+.6f}；场景四分类 Δ={da_sacc:+.6f}。"
+        "弱去噪项没有得到主身份指标的明确增益支持；诊断子集偏正但伴随检脸率和文本指标的混合负向变化，"
+        "样本不足以证明零效应。",
+        f"- 人工盲评：{'已完成 ' + str(human.get('n_filled')) + ' 题' if edit_available else '进行中（未完成，主表 N/A）'}；"
         "不能用自动指标替代人工编辑成功率或严重伪影率。",
         "", f"**判定：** {verdict}", "",
         "限制：8 人、每人一个训练种子、两个采样种子；区间是人物层 bootstrap 近似；"

@@ -38,12 +38,12 @@ def main() -> None:
                              .read_text(encoding="utf-8").splitlines()):
         if i == 0:
             continue
-        a, b, _ = line.split()
-        mapping[int(a)] = int(b)
+        a, _, orig_file = line.split()
+        mapping[int(a)] = orig_file
     ident = {}
     for line in (ROOT / "data/annotations/identity_CelebA.txt").read_text(encoding="utf-8").splitlines():
         n, p = line.split()
-        ident[int(Path(n).stem)] = int(p)
+        ident[n] = int(p)
     old_persons = {ident.get(mapping[i]) for i in ids if i in mapping}
     selected = json.loads((ROOT / "data/disen_formal/identities.json").read_text(encoding="utf-8"))["identities"]
     overlap = sorted(set(x["person_id"] for x in selected) & old_persons)

@@ -1,4 +1,7 @@
 {
   "available": false,
-  "reason": "ratings.csv is empty (human review not completed)"
+  "status": "empty",
+  "reason": "ratings.csv has no complete task",
+  "n_tasks": 176,
+  "n_complete": 0
 }

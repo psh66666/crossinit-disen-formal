@@ -1,0 +1,102 @@
+{
+  "D-B": {
+    "both_target_total": 100,
+    "both_target_per_person": [
+      12,
+      10,
+      13,
+      12,
+      13,
+      14,
+      12,
+      14
+    ],
+    "area_matched_total": 40,
+    "area_matched_per_person": [
+      3,
+      5,
+      4,
+      5,
+      6,
+      8,
+      4,
+      5
+    ],
+    "total_pairs": 128
+  },
+  "L-B": {
+    "both_target_total": 92,
+    "both_target_per_person": [
+      11,
+      13,
+      14,
+      11,
+      10,
+      10,
+      7,
+      16
+    ],
+    "area_matched_total": 32,
+    "area_matched_per_person": [
+      3,
+      5,
+      4,
+      3,
+      4,
+      6,
+      2,
+      5
+    ],
+    "total_pairs": 128
+  },
+  "D-L": {
+    "both_target_total": 96,
+    "both_target_per_person": [
+      14,
+      12,
+      15,
+      9,
+      12,
+      12,
+      8,
+      14
+    ],
+    "area_matched_total": 63,
+    "area_matched_per_person": [
+      9,
+      9,
+      8,
+      5,
+      8,
+      9,
+      7,
+      8
+    ],
+    "total_pairs": 128
+  },
+  "D-A": {
+    "both_target_total": 107,
+    "both_target_per_person": [
+      15,
+      12,
+      15,
+      11,
+      13,
+      14,
+      13,
+      14
+    ],
+    "area_matched_total": 91,
+    "area_matched_per_person": [
+      15,
+      12,
+      14,
+      9,
+      8,
+      11,
+      9,
+      13
+    ],
+    "total_pairs": 128
+  }
+}

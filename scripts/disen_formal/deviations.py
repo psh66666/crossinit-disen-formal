@@ -24,9 +24,13 @@ def main() -> None:
          "why": "The executor cannot see images. source_review.png remains available for a human check.",
          "impact": "Formal identities could still contain an image a human would reject."},
         {"id": "human_blind_review_not_completed",
-         "what": "176-task blind page and empty ratings.csv were produced; no labels were entered.",
+         "what": "The 176-task blind page is being completed by one human rater; final labels were not "
+                 "available when this devlog was generated." if not human.get("available", False) else
+                 "The 176-task single-rater blind review is complete.",
          "why": "Human visual judgment cannot be automated honestly.",
-         "impact": "Editing success, severe-artifact rate and human preference are N/A in the main table.",
+         "impact": ("Editing success, severe-artifact rate and human preference are N/A until all required "
+                    "fields are complete." if not human.get("available", False) else
+                    "Human columns come from the corrected 160-original/16-repeat analysis; one rater only."),
          "ratings_available": bool(human.get("available", False))},
         {"id": "fp16_model_snapshot",
          "what": "The SD2.1-base snapshot is the fp16-only sd2-community mirror already used by the old project.",
@@ -58,6 +62,45 @@ def main() -> None:
                  "a generate --image-ids filter for smoke tests/targeted regeneration, and report/aggregate scripts.",
          "why": "These are logging/tooling fixes; no training loss, optimizer, data, or model computation changed.",
          "impact": "The formal training runs were not restarted; the freeze's training-math assets still apply."},
+        {"id": "blind_key_repeat_bug",
+         "what": "The repeat tasks' key swapped method labels unconditionally while images swapped "
+                 " probabilistically; 11 of 16 repeat keys disagreed with the HTML images.",
+         "why": "The original blind builder had a branch bug; an audit found it before final scoring.",
+         "impact": "The key was repaired from the HTML image paths; task ids, page order and images were "
+                   "not changed, so already-entered A/B preference answers remain usable. The 160 original "
+                   "pairs were unaffected."},
+        {"id": "human_aggregation_rewrite",
+         "what": "The first human aggregator used position 'A' as a fixed method, ignored identity_preference, "
+                 "mixed repeats into effects, mixed p01/p02 into edit rates and did not deduplicate images.",
+         "why": "It did not implement the pre-registered human analysis semantics.",
+         "impact": "Rewritten: 160 originals for effects, 16 repeats only for consistency; method labels from "
+                   "the key; image-level dedupe with conflicts; p03-p08 seed101 48/group edit guardrail; "
+                   "per-person bootstrap; partial ratings are not marked available."},
+        {"id": "person_id_orig_idx_bug",
+         "what": "Source selection joined identity_CelebA.txt with the mapping's zero-based orig_idx, while "
+                 "official filenames are one-based (orig_file).",
+         "why": "The mapping exposes both idx/orig_idx and orig_file; the original code used the wrong column.",
+         "impact": "All recorded person_ids were shifted. Recomputing with orig_file leaves the 10 selected "
+                   "sources 10 distinct people and empty overlap with corrected historical persons; no pixels, "
+                   "weights or ArcFace scores changed, so no retraining. identities.json and the audit were corrected."},
+        {"id": "area_subset_scope",
+         "what": "The both-target and area-matched ArcFace subsets are 100/128 and 40/128 pairs (3-8 per person).",
+         "why": "They are screened after generation, not randomised subsets.",
+         "impact": "Reported as auxiliary, with counts; they do not replace the all-128 missing-face=0 primary metric."},
+        {"id": "cosine_direction_comment",
+         "what": "The adapter comment/report called the +0.001 cosine term an alignment term.",
+         "why": "Actually minimising a positive cosine pushes c and u apart.",
+         "impact": "Comments and report corrected to a disentanglement/contrast term; the trained weights and "
+                   "loss sign were not changed."},
+        {"id": "b_grad_accum_sum",
+         "what": "B calls backward() on each of the 4 micro-batch losses without dividing by accumulation.",
+         "why": "The custom trainer does not use Accelerator's automatic loss scaling.",
+         "impact": "The gradient is a sum rather than an average. AdamW's moment normalisation largely cancels "
+                   "constant scaling, but this is disclosed; no retraining and no claim of a 4x effective LR."},
+        {"id": "checkpoint_test_scope",
+         "what": "The engineering checkpoint test saves toy tensors and an optimizer without trained moments.",
+         "why": "It tests file/RNG round-trip, not real LoRA+adapter resume equivalence.",
+         "impact": "Report wording narrowed; reliable resume of a real interrupted adaptation job is not claimed."},
         {"id": "prompt_reuse",
          "what": "The eight prompts are fixed common edit prompts; some scenes overlap earlier experiments.",
          "why": "The new element is the people and the training method, not unseen prompt families.",

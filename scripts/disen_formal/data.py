@@ -36,28 +36,33 @@ def load_assets() -> dict:
                       .read_text(encoding="utf-8"))
 
 
-def parse_mapping() -> dict[int, int]:
+def parse_mapping() -> dict[int, str]:
+    """HQ idx -> official CelebA filename from the mapping's ``orig_file`` column.
+
+    The filename is one-based while ``orig_idx`` is zero-based; use the filename,
+    never ``orig_idx``, to join the identity annotation.
+    """
     out = {}
     p = RAW_DATA / "CelebA-HQ-to-CelebA-mapping.txt"
     for i, line in enumerate(p.read_text(encoding="utf-8").splitlines()):
         if i == 0 or not line.strip():
             continue
         parts = line.split()
-        out[int(parts[0])] = int(parts[1])
+        out[int(parts[0])] = parts[2]
     if len(out) != 30000:
         raise ValueError(f"mapping has {len(out)} rows, expected 30000")
     return out
 
 
-def parse_identity() -> dict[int, int]:
-    """CelebA image number -> person id."""
+def parse_identity() -> dict[str, int]:
+    """Official CelebA filename -> person id."""
     out = {}
     p = ROOT / "data" / "annotations" / "identity_CelebA.txt"
     for line in p.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         name, pid = line.split()
-        out[int(Path(name).stem)] = int(pid)
+        out[name] = int(pid)
     return out
 
 

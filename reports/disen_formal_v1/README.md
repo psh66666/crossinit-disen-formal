@@ -5,16 +5,30 @@ This directory is the deliverable for the 2026-11-19 formal matrix.
 ## Result at a glance
 
 - D−B ArcFace **+0.1817** (97.5% person-bootstrap CI +0.1253..+0.2391), positive in 8/8
-  people; the both-target subset is +0.1911 and the face-area-matched subset +0.1968.
+  people; the both-target subset is +0.1911 (100/128 pairs) and the face-area-matched
+  subset +0.1968 (40/128 pairs). These are selected auxiliary subsets, not randomised,
+  and do not replace the all-128 missing-face=0 primary metric.
 - But D−B also loses editing/scene ability: full-sentence CLIP −0.0442, scene margin
   −0.0734, four-class scene accuracy −0.4219. This is an **identity–scene/editing
   trade-off**, not an overall improvement.
 - L−B ArcFace +0.1334 (CI +0.0040..+0.2506), with an even larger scene loss.
 - D−L improves scene margin +0.0405 and scene accuracy +0.3438, while the extra
-  ArcFace gain has a 95% CI crossing zero. The image branch/weak term mainly
-  recovers text-conditioned scene ability lost by plain LoRA.
-- Human blind ratings were not completed, so editing success/artefact columns are
-  **N/A**.
+  ArcFace gain has a 95% CI crossing zero. The whole Disen training package
+  (adapter + weak denoising + contrast) mainly recovers scene ability lost by plain LoRA.
+- Human blind ratings are still in progress; editing success/artefact columns remain
+  **N/A** until all 176 tasks are complete.
+
+## Known corrections before final scoring
+
+- The blind repeat-key bug (11/16 repeats) was repaired from the HTML image paths;
+  task ids, page order and images were unchanged. A corrected human aggregator now
+  uses 160 originals for effects and 16 repeats only for consistency.
+- Person IDs were recomputed with the mapping's `orig_file`; the 10 selected sources
+  remain 10 distinct people and have empty overlap with corrected historical persons.
+  No pixels, weights or ArcFace scores changed, so no retraining was done.
+- The adapter cosine term is a disentanglement/contrast term (positive cosine is
+  minimised); comments and report wording were corrected, weights were not changed.
+- B's four micro-batch gradients are summed, not averaged; this is disclosed.
 
 ## What is inside
 
@@ -75,8 +89,9 @@ python -m scripts.disen_formal.package
 
 1. Source images were selected with an automated pose/attribute/InsightFace proxy.
    `source_review.png` still requires a human visual check before publication.
-2. The 176-task blind page was built, but no human ratings were entered. The
-   report's human editing/artifact columns are **N/A**; automatic ArcFace/CLIP
+2. The 176-task blind page is being completed by one human rater; final labels
+   were not available when this package snapshot was made. The report's human
+   editing/artifact columns are **N/A** until completion; automatic ArcFace/CLIP
    scores are not a substitute.
 3. Eight people, one training seed per person, two sampling seeds. Bootstrap
    intervals over people are approximate and cannot replace training-seed

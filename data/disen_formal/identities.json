@@ -11,7 +11,7 @@
     {
       "selection_order": 1,
       "image_id": 25211,
-      "person_id": 458,
+      "person_id": 7803,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/25211.jpg",
       "original_sha256": "9667f99787e3509c412a3da09c2220a4c24437a5875b5afaa52aedc18550ab29",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/25211.png",
@@ -29,12 +29,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 458,
+      "celeb_orig_idx": 137122,
+      "celeb_orig_file": "137123.jpg"
     },
     {
       "selection_order": 2,
       "image_id": 15268,
-      "person_id": 6581,
+      "person_id": 8857,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/15268.jpg",
       "original_sha256": "b3d3556a1f9703ba8196de063a8aa6de66f0ca691313ebe2eed026513840a90f",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/15268.png",
@@ -52,12 +55,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 6581,
+      "celeb_orig_idx": 107549,
+      "celeb_orig_file": "107550.jpg"
     },
     {
       "selection_order": 3,
       "image_id": 1896,
-      "person_id": 446,
+      "person_id": 5884,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/1896.jpg",
       "original_sha256": "a254a70f6fa889cf1de9dc6a01994f19062d7fe864480a6086f2b98e7be74430",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/1896.png",
@@ -75,12 +81,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 446,
+      "celeb_orig_idx": 62290,
+      "celeb_orig_file": "062291.jpg"
     },
     {
       "selection_order": 4,
       "image_id": 13069,
-      "person_id": 4364,
+      "person_id": 5601,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/13069.jpg",
       "original_sha256": "cc2aac06bb4f27280e8d9a877c8927b94ff09ae8b40047c9ee9d2a11fd03effc",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/13069.png",
@@ -98,12 +107,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 4364,
+      "celeb_orig_idx": 46035,
+      "celeb_orig_file": "046036.jpg"
     },
     {
       "selection_order": 5,
       "image_id": 7616,
-      "person_id": 8810,
+      "person_id": 69,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/7616.jpg",
       "original_sha256": "67cf8532d39e841e97032aa9770d09a6d4941bcbb282973dfb45f7d018d25cc5",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/7616.png",
@@ -121,12 +133,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 8810,
+      "celeb_orig_idx": 44116,
+      "celeb_orig_file": "044117.jpg"
     },
     {
       "selection_order": 6,
       "image_id": 6802,
-      "person_id": 1368,
+      "person_id": 6681,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/6802.jpg",
       "original_sha256": "dc6f986447e423855f5f6dc584eb1a5fe11b322abf8140252f8c39520f1f0c94",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/6802.png",
@@ -144,12 +159,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 1368,
+      "celeb_orig_idx": 90444,
+      "celeb_orig_file": "090445.jpg"
     },
     {
       "selection_order": 7,
       "image_id": 23893,
-      "person_id": 6372,
+      "person_id": 5185,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/23893.jpg",
       "original_sha256": "c97123888df96c67eb143b3aaa313cd1eb4167f0725c9af8ea1d7399db04407c",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/23893.png",
@@ -167,12 +185,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 6372,
+      "celeb_orig_idx": 200131,
+      "celeb_orig_file": "200132.jpg"
     },
     {
       "selection_order": 8,
       "image_id": 23493,
-      "person_id": 5343,
+      "person_id": 66,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/23493.jpg",
       "original_sha256": "151c7635f05da1f1edd70c9edaa446a60fdfdf0b8594fba4388ee19b2d171e2d",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/23493.png",
@@ -190,12 +211,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 5343,
+      "celeb_orig_idx": 84986,
+      "celeb_orig_file": "084987.jpg"
     },
     {
       "selection_order": 9,
       "image_id": 22865,
-      "person_id": 1844,
+      "person_id": 3696,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/22865.jpg",
       "original_sha256": "8a2e0639c7dfd01a9957436254df1a804f414adc46e5c35d4c398584c2ed185e",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/22865.png",
@@ -213,12 +237,15 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 1844,
+      "celeb_orig_idx": 51514,
+      "celeb_orig_file": "051515.jpg"
     },
     {
       "selection_order": 10,
       "image_id": 22832,
-      "person_id": 987,
+      "person_id": 416,
       "original": "/root/autodl-tmp/crossinit-disen-formal/data/CelebAMask-HQ/CelebA-HQ-img/22832.jpg",
       "original_sha256": "53c63340b9f6d52300ab172ffbc2f04599a09f71e33756546b9c09e6b97469c5",
       "source_512": "/root/autodl-tmp/crossinit-disen-formal/data/disen_formal/source/22832.png",
@@ -236,7 +263,17 @@
         "method": "automated_proxy_only",
         "criteria": "single face det>=0.8, area .06-.50, |yaw|<=20, |pitch|<=15, no glasses/hat/blur attribute, no historical person or near-duplicate",
         "human_visual_review": "pending"
-      }
+      },
+      "person_id_at_training": 987,
+      "celeb_orig_idx": 136034,
+      "celeb_orig_file": "136035.jpg"
     }
-  ]
+  ],
+  "mapping_corrected": {
+    "method": "CelebA-HQ mapping orig_file -> identity_CelebA.txt full filename",
+    "reason": "The original code used orig_idx; official filenames are orig_idx + 1.",
+    "formal_distinct": 8,
+    "reserve_distinct": 2,
+    "total_distinct": 10
+  }
 }

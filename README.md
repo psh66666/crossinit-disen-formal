@@ -8,14 +8,28 @@ four groups (B/L/D/A), 512 paired images.
 ## Result at a glance
 
 - **D−B ArcFace +0.1817** (97.5% person-bootstrap CI +0.1253..+0.2391), positive in
-  8/8 people; both-target subset +0.1911, face-area-matched subset +0.1968.
+  8/8 people; both-target subset +0.1911 (100/128 pairs), face-area-matched
+  subset +0.1968 (40/128 pairs). These are selected auxiliary subsets, not the
+  all-128 missing-face=0 primary metric.
 - **But D−B loses editing/scene ability**: full-sentence CLIP −0.0442, scene margin
   −0.0734, four-class scene accuracy −0.4219. This is an identity–scene/editing
   trade-off, **not** an overall improvement.
 - L−B ArcFace +0.1334 (CI +0.0040..+0.2506), with a larger scene loss.
-- D−L recovers scene margin +0.0405 / scene accuracy +0.3438, while its extra
-  ArcFace gain has a 95% CI crossing zero.
-- Human blind ratings were not completed; editing/artefact columns are N/A.
+- The whole Disen training package (adapter + weak denoising + contrast) recovers
+  scene margin +0.0405 / scene accuracy +0.3438 relative to plain LoRA, while its
+  extra ArcFace gain has a 95% CI crossing zero.
+- Human blind ratings are in progress; editing/artefact columns are N/A until all
+  176 tasks are complete. A repeat-key bug (11/16) was repaired from HTML image
+  paths without changing task ids, order or images; the human aggregator was rewritten.
+
+## Known corrections
+
+- Person IDs were recomputed with the mapping's `orig_file` column. The 10 selected
+  sources remain 10 distinct people and have empty overlap with corrected historical
+  persons; no pixels, weights or ArcFace scores changed, so no retraining was done.
+- The adapter cosine term is a disentanglement/contrast term (positive cosine is
+  minimised), not an alignment term; only comments/report wording changed.
+- B's four micro-batch gradients are summed, not averaged; disclosed, no retraining.
 
 ## Papers and commits
 
