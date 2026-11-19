@@ -18,9 +18,11 @@ four groups (B/L/D/A), 512 paired images.
 - The whole Disen training package (adapter + weak denoising + contrast) recovers
   scene margin +0.0405 / scene accuracy +0.3438 relative to plain LoRA, while its
   extra ArcFace gain has a 95% CI crossing zero.
-- Human blind ratings are in progress; editing/artefact columns are N/A until all
-  176 tasks are complete. A repeat-key bug (11/16) was repaired from HTML image
-  paths without changing task ids, order or images; the human aggregator was rewritten.
+- Human blind review: 176/176 completed by one rater. D−B joint preference for D
+  is 0.297 [0.180,0.422] while identity preference for D is 0.859; edit success
+  B/D/L = 1.000/0.583/0.042 and severe artefacts B/D/L = 0.000/0.500/0.917. The
+  pre-registered −0.10 edit guardrail is breached (D−B −0.417). The repeat-key bug
+  (11/16) was repaired without changing task ids, order or images.
 
 ## Known corrections
 
@@ -131,8 +133,9 @@ python -m scripts.disen_formal.package
 
 ## Honest limitations
 
-1. Human source-image review is pending. The 176-task blind review is being
-   completed by one human rater; human columns are N/A until all tasks are complete.
+1. Human source-image review is pending. The 176-task blind review was completed
+   by one rater who had seen method-labelled grids; it is a single-reviewer,
+   method-name-hidden, random-left/right evaluation, not a fully blind multi-rater study.
 2. Eight people, one training seed, two sampling seeds; intervals are
    person-level approximations.
 3. The source selection uses an automated proxy; `source_review.png` remains for
