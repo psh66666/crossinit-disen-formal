@@ -7,7 +7,7 @@
       "reason": "cosine direction comment corrected; no computation change"
     },
     {
-      "current_sha256": "a5a8fc29481fb626174e0859ee6e858688d4c4bbb0a2ec930a8c6ba0469ed607",
+      "current_sha256": "b91799d8407fdbe0363e01a6025549492c869acb6f0c6e7c7f04db3acc4abbd1",
       "old_sha256": "435c416751e42dd597e7f8b37f735961de42e7f45f6d50b3b86c5bcf0b669388",
       "path": "scripts/disen_formal/aggregate.py",
       "reason": "corrected human aggregation, subset counts, conclusion wording"
@@ -43,7 +43,7 @@
       "reason": "archive manifest filename and history audit inclusion"
     },
     {
-      "current_sha256": "20666287fcf7d20dcd865202d746a5a78f72502b52190a393693d5a8b34910c2",
+      "current_sha256": "c61ca9bf8ca347c5c27a14306ea81fd846f2498be13ff2ef6f71b8524ff63ac1",
       "old_sha256": "aa90c50752c084bdbb67160dcdd71ee3f3f7357e63de2eafe5b87c4abafd2cf6",
       "path": "scripts/disen_formal/report.py",
       "reason": "corrected results wording, reference, limitations"
@@ -68,7 +68,7 @@
     "crossinit/masks.py": "a82ed00f0d9aac74366c103fa003a57df8fe8e41d2f6d95eb8470a628fa1b98d",
     "crossinit/pipeline_io.py": "66450cdd791c9574f5610f5d719f3d7cfffbca2c85528281da067325bbb5f78d",
     "scripts/disen_formal/__init__.py": "580f353f53f1ab68286a67b8578d190c79c8fe67ee30c9f790b10286086412de",
-    "scripts/disen_formal/aggregate.py": "a5a8fc29481fb626174e0859ee6e858688d4c4bbb0a2ec930a8c6ba0469ed607",
+    "scripts/disen_formal/aggregate.py": "b91799d8407fdbe0363e01a6025549492c869acb6f0c6e7c7f04db3acc4abbd1",
     "scripts/disen_formal/assets.py": "76d8e4eaa8dcd1ae1ae96cf5eff74cc948721eb395193fbc8cbe3e390ec47c24",
     "scripts/disen_formal/audit_human_eval.py": "9b5d4bc1ec998b369746f05228d6355a3851fc0d05149ab3b559cda0dacdf8fa",
     "scripts/disen_formal/blind.py": "ea209b37d35ade43f1df8dddb927f9053daaee0aa63ea0870f3997d0fdf5e424",
@@ -84,7 +84,7 @@
     "scripts/disen_formal/human_eval.py": "6283e00d30f542e17dca533cdc059f3853fe26954ff1fc460662e4746d540bc2",
     "scripts/disen_formal/package.py": "d71b43d0dd7697ec7b22f9734a84164e866fe0691373eb8ceb1677f28653b112",
     "scripts/disen_formal/post_freeze_changes.py": "3e627ea2e0422331d3a3cfbcd65243767a0e4ea2bf20bfaac2dc9934eef9a7ac",
-    "scripts/disen_formal/report.py": "20666287fcf7d20dcd865202d746a5a78f72502b52190a393693d5a8b34910c2",
+    "scripts/disen_formal/report.py": "c61ca9bf8ca347c5c27a14306ea81fd846f2498be13ff2ef6f71b8524ff63ac1",
     "scripts/disen_formal/run_manifest.py": "f6e41766d90571583a7c092bd0f3fb3b9b13b20acd2aed0489188c815b16259d",
     "scripts/disen_formal/run_matrix.py": "e7e0a1d808561878d6380d59f426f3876532bb3d84f56ba232e647e2bc37b32b",
     "scripts/disen_formal/score.py": "7800b4ffeefa8021b48edf18db2c9ef858ad13b77b452cdd0727fae7e2307e56",

@@ -1,0 +1,8 @@
+{
+  "completed_at": "2026-11-19",
+  "source_file": "/Users/rm001/Downloads/ratings (2).csv",
+  "task_id": "t025",
+  "field": "edit_success_A",
+  "filled_value": "yes",
+  "reason": "The reviewer left this field blank; the executor showed the exact A image and asked the reviewer, who answered 是（编辑成功） on 2026-11-19. All other labels are unchanged."
+}

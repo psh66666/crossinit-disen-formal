@@ -241,7 +241,10 @@ def main() -> None:
                      f"{fmt(m['scene_acc'])} | {'N/A' if e is None else f'{e:.3f}'} | "
                      f"{'N/A' if a is None else f'{a:.3f}'} | {m['train_seconds_mean']:.0f} | "
                      f"{m['trainable_params']:,} |")
-    lines += ["", "人工列为 N/A 表示盲评尚未完成；不得用自动指标替代人工编辑判断。"]
+    if human.get("available"):
+        lines += ["", "人工列来自 176 题单评审；编辑/伪影为 p03–p08、seed101；A 组没有人工任务，故为 N/A。"]
+    else:
+        lines += ["", "人工列为 N/A 表示盲评尚未完成；不得用自动指标替代人工编辑判断。"]
     (out / "main_table.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     # Comparisons table.
@@ -298,13 +301,19 @@ def main() -> None:
             and (db_edit is None or db_edit >= guard_edit):
         verdict = ("在本固定设置下，D 相对 B 的身份指标达到预设实际改善参考，"
                    "自动场景/CLIP 未显示明显点估计损失"
-                   + ("；人工编辑差也未破预设护栏。" if human_edit_available else
-                      "；预注册人工编辑护栏仍未评估。"))
+                   + (f"；人工编辑差 {db_edit:+.3f}，未破预设 -0.10 点估计护栏。"
+                      if human_edit_available and db_edit is not None and db_edit >= guard_edit
+                      else ("；人工编辑差也达到预设负向护栏。" if human_edit_available
+                            else "；预注册人工编辑护栏仍未评估。")))
     elif db_arc > 0 and (auto_edit_loss or (db_edit is not None and db_edit < guard_edit)):
         verdict = ("D−B 身份指标明显上升且区间下界>0，但自动证据显示场景 margin、场景四分类和全句 CLIP "
                    "同时明显下降。按预注册的解释边界，不能写整体改善；"
-                   + ("人工编辑差也达到预注册护栏的负向方向。" if human_edit_available and db_edit is not None and db_edit < guard_edit
-                      else "预注册的人工编辑成功率护栏尚未评估。"))
+                   + (f"人工编辑差 {db_edit:+.3f}，也达到预注册 -0.10 负向护栏，因此更不能写整体改善。"
+                      if human_edit_available and db_edit is not None and db_edit < guard_edit
+                      else (f"人工编辑差 {db_edit:+.3f}，未破 -0.10 点估计护栏；"
+                            "但自动场景/CLIP 已明显下降，仍不能写整体改善。"
+                            if human_edit_available and db_edit is not None
+                            else "预注册的人工编辑成功率护栏尚未评估。")))
     elif db_arc > 0:
         verdict = "D−B 身份方向有利，但区间跨 0 或未达 +0.02 实际参考；不能称稳定或显著改善。"
     else:

@@ -48,12 +48,46 @@ def main() -> None:
                              f"{hp['D-L']['joint']['win_rate']:.3f}。")
         human_limit_text = ("人工编辑/伪影率与偏好来自单评审；评审者已看过方法标注网格，"
                             "只能称方法名隐藏、随机左右呈现的单评审。")
+        human_disclosure = ("176 题盲评由一名人类评审完成；单评审且其看过方法标注网格，"
+                            "因此只称方法名隐藏、随机左右呈现的单评审，不称完全盲或多人验证。")
+        human_results_paragraph = (
+            f"人工结果进一步支持“身份—编辑折中”：D−B joint 偏好中 D 只有 "
+            f"{hp['B-D']['joint']['win_rate']:.3f}（B 为 {1-hp['B-D']['joint']['win_rate']:.3f}），"
+            f"L−B 中 L 只有 {hp['B-L']['joint']['win_rate']:.3f}；但 D−B identity 偏好 D 为 "
+            f"{hp['B-D']['identity']['win_rate']:.3f}，说明人眼确实更认 D 的身份。"
+            f"p03–p08 编辑成功率 B={human['edit_success']['B']['rate']:.3f}、"
+            f"L={human['edit_success']['L']['rate']:.3f}、D={human['edit_success']['D']['rate']:.3f}；"
+            f"严重伪影率 B={human['severe_artifact']['B']['rate']:.3f}、"
+            f"L={human['severe_artifact']['L']['rate']:.3f}、D={human['severe_artifact']['D']['rate']:.3f}。"
+            f"D−B 编辑差 {human['edit_differences']['D-B']['mean_delta']:+.3f}，"
+            f"低于预注册 −0.10 护栏；D−L joint 偏好 D 为 {hp['D-L']['joint']['win_rate']:.3f}，"
+            "说明整套训练包相对普通 LoRA 确有恢复，但仍远不如 B。")
+        human_visual_text = ("人工查看固定网格（非盲）还发现：L 有明显纹理破碎，D/A 部分结果有较强描边、"
+                             "过饱和和不自然面部纹理；已完成 176 题盲评，说明 ArcFace 不能回答自然度与可用性。")
+        human_bullet = (
+            f"- 人工结果（176 题）：D−B joint D={hp['B-D']['joint']['win_rate']:.3f}、"
+            f"identity D={hp['B-D']['identity']['win_rate']:.3f}；L−B joint L={hp['B-L']['joint']['win_rate']:.3f}；"
+            f"D−L joint D={hp['D-L']['joint']['win_rate']:.3f}。编辑成功率 B/D/L="
+            f"{human['edit_success']['B']['rate']:.3f}/{human['edit_success']['D']['rate']:.3f}/"
+            f"{human['edit_success']['L']['rate']:.3f}；伪影率 B/D/L="
+            f"{human['severe_artifact']['B']['rate']:.3f}/{human['severe_artifact']['D']['rate']:.3f}/"
+            f"{human['severe_artifact']['L']['rate']:.3f}。D−B 编辑差 "
+            f"{human['edit_differences']['D-B']['mean_delta']:+.3f}，命中 −0.10 负向护栏。"
+            f"重复一致性 joint={human['repeat_consistency']['joint_agreement']:.3f}，"
+            f"identity={human['repeat_consistency']['identity_agreement']:.3f}；去重冲突 "
+            f"{len(human.get('dedupe_conflicts', []))} 条。")
     else:
         human_block = ""
         human_status_text = "人工盲评仍在进行；主表人工列保持 N/A，完成后再按锁定规则汇总。"
         human_limit_text = ("人工盲评进行中；主表编辑成功率/严重伪影率为 N/A，直到 176 题全部合法完成。"
                             "单评审已经看过带方法标注的固定网格，因此即使完成 176 题，也只能称"
                             "“方法名隐藏、随机左右呈现的单评审”。")
+        human_disclosure = ("176 题盲评尚未完成；执行者无法用自动指标替代人工编辑判断。")
+        human_results_paragraph = ""
+        human_visual_text = ("人工查看固定网格（非盲）还发现：L 有明显纹理破碎，D/A 部分结果有较强描边、"
+                             "过饱和和不自然面部纹理；ArcFace 不能回答这些图是否更自然、更可用。"
+                             "该观察不替代正在进行的 176 题盲评。")
+        human_bullet = "- 人工盲评进行中；主表编辑成功率/严重伪影率为 N/A，直到 176 题全部合法完成。"
     technical = json.loads((res / "technical_check.json").read_text(encoding="utf-8"))
     coverage = json.loads((res / "coverage.json").read_text(encoding="utf-8"))
     conclusion = (res / "conclusion.md").read_text(encoding="utf-8")
@@ -125,7 +159,7 @@ L/D/A 各 2000 更新，AdamW LR 1e-4，LoRA rank 4、alpha 4、dropout 0、scal
 
 从 CelebAMask-HQ 的 30000 张原图按 seed=20261119 确定性排序；通过 CelebA-HQ→CelebA 映射的 **orig_file 文件名**与 `identity_CelebA.txt` 取得 person_id。这里披露一个已修正的元数据错误：早期筛选用的是 mapping 的 `orig_idx`（0 基），而官方文件名是 1 基，导致训练时记录的人物编号整体错位；事后用 `orig_file` 重算后，8 名正式人物、2 名候补仍互不相同，且与正确历史人物集合 overlap 为空。源图像素、训练、生成和 ArcFace 分数均未改变，因此不重训，只修正元数据与审计记录。历史图像编号本身被直接排除；历史**人物**排除当时误用了同一错位列，事后用 orig_file 审计显示与正式人物无重合。另排除历史配置中出现过的额外图像，以及相互 ArcFace 余弦≥0.65 的疑似同人。自动筛查要求单张目标脸 det≥0.8、面积占整图 [0.06,0.50]，并利用官方 pose/attribute 注释排除严重侧转、眼镜、帽子、模糊。
 
-**需要明确披露的偏差：**执行者无法进行人工视觉审图，源图筛选采用上述自动代理并保留 `source_review.png` 供人工复核；176 题盲评由一名人类评审进行中，完成后主表才会填入人工列。任何自动指标都不能替代人工编辑判断。
+**需要明确披露的偏差：**执行者无法进行人工视觉审图，源图筛选采用上述自动代理并保留 `source_review.png` 供人工复核；{human_disclosure} 任何自动指标都不能替代人工编辑判断。
 
 评审工具在正式评分前还发现并修正了一个关键 bug：16 道重复题中有 11 道的 key 方法标签与 HTML 图片路径不一致（重复题的图片只在概率分支交换，但 key 无条件交换），且第一版汇总把 A 侧当作固定方法、把重复题混入效应、把中性提示混入编辑率。修复方式是**从 HTML 实际图片路径重建 key**，不改变题号、顺序和图片，因此评审已经填入的 A/B 偏好仍可用；同时重写汇总为 160 道独立题进入效应、16 道重复题只做一致性、按图像去重、编辑护栏固定 p03–p08/seed101。合成标签的验收测试（全选 D 侧=100%、全 tie=0.5、左右互换不变）已通过。
 
@@ -156,7 +190,7 @@ L/D/A 各 2000 更新，AdamW LR 1e-4，LoRA rank 4、alpha 4、dropout 0、scal
 | D−L | ArcFace | {float(dl['mean_delta']):+.4f} | {float(dl['ci_low']):+.4f} | {float(dl['ci_high']):+.4f} |
 | D−A | ArcFace | {float(da['mean_delta']):+.4f} | {float(da['ci_low']):+.4f} | {float(da['ci_high']):+.4f} |
 
-D−B 的身份收益并不是无代价的：全句 CLIP Δ={float(db_clip):+.4f}、场景 margin Δ={float(db_scene):+.4f}、场景四分类 Δ={float(db_sacc):+.4f}。这些是**自动诊断**，不是原预注册的人工编辑护栏；后者要在 176 题盲评完成后才可判定。按预注册的解释边界，当前不能写整体改善，只能写“身份—文本/场景折中，人工编辑能力待评估”。D−L 的场景 margin 为 {float(dl_scene):+.4f}、四分类为 {float(dl_sacc):+.4f}，说明整套 Disen 训练包（adapter+弱去噪+对比项）把 LoRA 损失掉的场景能力补回一部分；该比较不能把收益归给其中单项，也不能确认额外的身份增益（D−L ArcFace 95% 区间跨 0）。
+D−B 的身份收益并不是无代价的：全句 CLIP Δ={float(db_clip):+.4f}、场景 margin Δ={float(db_scene):+.4f}、场景四分类 Δ={float(db_sacc):+.4f}。这些是**自动诊断**；预注册的人工编辑护栏也已按 p03–p08 判定。{human_results_paragraph} 按预注册的解释边界，不能写整体改善：身份更高，但联合偏好、编辑成功率和伪影率都明显更差。D−L 的场景 margin 为 {float(dl_scene):+.4f}、四分类为 {float(dl_sacc):+.4f}，说明整套 Disen 训练包（adapter+弱去噪+对比项）把 LoRA 损失掉的场景能力补回一部分；该比较不能把收益归给其中单项，也不能确认额外的身份增益（D−L ArcFace 95% 区间跨 0）。
 
 逐人看，D−B 的 ArcFace 差在 {db_pos}/8 人上为正，L−B 在 {lb_pos}/8 人上为正；方向一致性比单看均值更强。
 
@@ -170,7 +204,7 @@ D−B 的双目标脸子集 Δ={db_both:+.4f}（{db_both_n}/128 对）、脸面�
 
 场景指标的下降在图上也很直接：B 的场景四分类接近 1.00，L 只有 0.23，D 回到 0.58，A 为 0.64。一个与现象相符的解释是：只优化 token 的 B 保留更多冻结底座的文本条件行为；L/D/A 在单张源图上继续训练 2000 步，LoRA 可能同时拟合源图背景/构图。固定终点实验不能证明这是唯一根因。图像 adapter 与弱去噪的作用更像“把 LoRA 拉回文本条件”，它提高了 D 相对 L 的 CLIP/场景，却没有把 D 拉回 B 的水平。这是本轮最重要的失败/折中证据，而不是可以用“身份更高”掩盖的副作用。
 
-固定正文图使用人物顺序第 1/3/5/7 人、p03/p04/p05/p08、seed101，共 16 组，不按效果挑选；完整网格在 `results/disen_formal_v1/grids/`。人工查看固定网格（非盲）还发现：L 有明显纹理破碎，D/A 部分结果有较强描边、过饱和和不自然面部纹理；ArcFace 不能回答这些图是否更自然、更可用。该观察作为人工质量限制报告，不替代正在进行的 176 题盲评。诊断图 `db_identity_extremes.png` 只展示 D−B 身份差最好/最差的各两个键，不替代完整网格。
+固定正文图使用人物顺序第 1/3/5/7 人、p03/p04/p05/p08、seed101，共 16 组，不按效果挑选；完整网格在 `results/disen_formal_v1/grids/`。{human_visual_text}诊断图 `db_identity_extremes.png` 只展示 D−B 身份差最好/最差的各两个键，不替代完整网格。
 
 ![main fixed grid](results/disen_formal_v1/grids/main_fixed_16_compact.png)
 
@@ -184,7 +218,8 @@ D−B 的双目标脸子集 Δ={db_both:+.4f}（{db_both_n}/128 对）、脸面�
 - {human_limit_text} 不能称完全盲或独立多人验证。
 - 本轮使用固定的常见编辑基准，部分场景与历史实验重叠；新的是人物与训练方法，不声称未见场景家族的泛化。
 - 此前 CPA/Mixed 等文本侧/损失探索未达预期，保持原判定，不混入本轮统计；完整历史在附录。
-- 人工盲评尚未完成，因此编辑成功率、严重伪影率和人眼偏好都没有进入主表；自动 CLIP 只能说明图文相似度，不能替代“红围巾是否真的在脖子上”“洗衣店里是否有洗衣机”这类判断。
+{human_bullet}
+- 自动 CLIP 只能说明图文相似度，不能替代“红围巾是否真的在脖子上”“洗衣店里是否有洗衣机”这类判断。
 - 本轮没有做“按效果挑检查点”：D 的 2000 步损失并不比 1500/1000 更小是可能的，但主表固定最后一步。训练曲线显示 L/D/A 的精确去噪损失高度波动，单步损失不能作为换组或早停依据。
 - D−A 只解释该实现中的一个权重 0.01 项：主身份指标没有得到明确增益支持（Δ=+0.0087，95% CI 跨 0，仅 2/8 人为正），但有效脸率、CLIP、场景指标同时有混合负向变化；样本不足以证明零效应，也不证明 DisenBooth 的其他部分无效。本轮不追加搜索。
 - 场景四分类在 B 上接近 1.00 而 L 上只有 0.23，这个幅度也可能部分来自 B 图像本身更接近源图背景；因此报告把场景 margin/CLIP/人工编辑一起看，不把四分类单独当成“编辑能力”的唯一定义。
@@ -219,7 +254,7 @@ D−B 的双目标脸子集 Δ={db_both:+.4f}（{db_both_n}/128 对）、脸面�
 6. **主表**：见 `main_table.md`；D−B ArcFace {float(db['mean_delta']):+.4f}（97.5% CI {float(db['ci_low']):+.4f}..{float(db['ci_high']):+.4f}）。
 7. **配对图**：`grids/main_fixed_16.png`；完整 8×8×2 网格。
 8. **消融**：L−B {float(lb['mean_delta']):+.4f}；D−L {float(dl['mean_delta']):+.4f}；D−A {float(da['mean_delta']):+.4f}。
-9. **限制**：8 人、单训练种子、人工盲评进行中、自动代理选图。
+9. **限制**：8 人、单训练种子、人工盲评已完成（单评审）、自动代理选图。
 10. **结论**：见 `conclusion.md`；不伪造正向结论。
 """
     (OUT / "slides.md").write_text(slides, encoding="utf-8")

@@ -15,8 +15,10 @@ This directory is the deliverable for the 2026-11-19 formal matrix.
 - D−L improves scene margin +0.0405 and scene accuracy +0.3438, while the extra
   ArcFace gain has a 95% CI crossing zero. The whole Disen training package
   (adapter + weak denoising + contrast) mainly recovers scene ability lost by plain LoRA.
-- Human blind ratings are still in progress; editing success/artefact columns remain
-  **N/A** until all 176 tasks are complete.
+- Human blind review: 176/176 tasks completed by one rater. D−B joint preference for D is
+  **0.297** [0.180,0.422] while identity preference for D is **0.859**; edit success is
+  B/D/L = 1.000/0.583/0.042, severe artefacts B/D/L = 0.000/0.500/0.917. The pre-registered
+  −0.10 edit guardrail is breached (D−B **−0.417**).
 
 ## Known corrections before final scoring
 
@@ -32,7 +34,7 @@ This directory is the deliverable for the 2026-11-19 formal matrix.
 
 ## What is inside
 
-- `report.md` / `report.pdf`: 6–8 page report.
+- `report.md` / `report.pdf`: 7-page report (references included).
 - `slides.pdf` / `slides.md`: 8–10 page talk deck.
 - `contribution.md`: single-person contribution and AI-assistance disclosure.
 - `results/disen_formal_v1/`:
@@ -43,8 +45,7 @@ This directory is the deliverable for the 2026-11-19 formal matrix.
   - `conclusion.md` — pre-registered interpretation, including N/A human fields.
   - `figures/` — training curves, per-person deltas, scatter.
   - `grids/` — fixed 16-group sheet and full 8×8×2 grids.
-  - `blind/index.html` + `key.json` + `ratings.csv` — 176 blind tasks; the empty
-    ratings file means human review was **not** completed by the executor.
+  - `blind/index.html` + `key.json` + `ratings.csv` — 176 blind tasks; the human columns are from the completed 176-task single review.
 - `runs/disen_formal_v1/<image_id>/<B|L|D|A>/` — config, logs, metrics, final
   checkpoints; optimizer/RNG checkpoints are included in the full archive.
 - `runs/disen_formal_v1/generated/manifest.jsonl` — all 512 image keys, hashes,
@@ -89,10 +90,11 @@ python -m scripts.disen_formal.package
 
 1. Source images were selected with an automated pose/attribute/InsightFace proxy.
    `source_review.png` still requires a human visual check before publication.
-2. The 176-task blind page is being completed by one human rater; final labels
-   were not available when this package snapshot was made. The report's human
-   editing/artifact columns are **N/A** until completion; automatic ArcFace/CLIP
-   scores are not a substitute.
+2. Human labels come from one rater who had seen method-labelled grids; this is a
+   single-reviewer, method-name-hidden, random-left/right evaluation, not a fully
+   blind or multi-rater study. Repeat consistency: joint 0.688, identity 0.875;
+   18 deduplicated label conflicts are reported. The pre-registered edit guardrail
+   is breached for D−B.
 3. Eight people, one training seed per person, two sampling seeds. Bootstrap
    intervals over people are approximate and cannot replace training-seed
    robustness.
