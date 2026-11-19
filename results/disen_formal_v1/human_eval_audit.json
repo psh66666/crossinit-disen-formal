@@ -54,6 +54,13 @@
       false
     ]
   },
+  "dedupe_conflict": {
+    "image_key": "13069|D|p04|101",
+    "first_task": "t142",
+    "later_task": "t028",
+    "conflicts": 1,
+    "unique_images": 192
+  },
   "identity_used": 0.5,
   "status": "PASS"
 }

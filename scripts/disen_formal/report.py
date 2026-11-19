@@ -32,6 +32,28 @@ def main() -> None:
         main_table = "\n".join(main_table.splitlines()[1:]).lstrip()
     comp_rows = read_csv(res / "comparisons.csv")
     human = json.loads((res / "human_summary.json").read_text(encoding="utf-8"))
+    human_ok = bool(human.get("available", False))
+    if human_ok:
+        hp = human["preference"]
+        rows = []
+        for comp, target in (("B-D", "D"), ("B-L", "L"), ("D-L", "D")):
+            j, idn = hp[comp]["joint"], hp[comp]["identity"]
+            rows.append(f"| {comp} | {target} | {j['win_rate']:.3f} "
+                        f"[{j['ci_low']:.3f},{j['ci_high']:.3f}] | {idn['win_rate']:.3f} | {j['n_pairs']} |")
+        human_block = ("| 比较 | 目标方法 | joint 胜率 [95% CI] | identity 胜率 | 配对数 |\n"
+                       "|---|---:|---:|---:|---:|\n" + "\n".join(rows))
+        human_status_text = (f"人工盲评已完成 {human.get('n_filled')} 题：D−B joint 目标 D 胜率 "
+                             f"{hp['B-D']['joint']['win_rate']:.3f}，L−B joint 目标 L "
+                             f"{hp['B-L']['joint']['win_rate']:.3f}，D−L joint 目标 D "
+                             f"{hp['D-L']['joint']['win_rate']:.3f}。")
+        human_limit_text = ("人工编辑/伪影率与偏好来自单评审；评审者已看过方法标注网格，"
+                            "只能称方法名隐藏、随机左右呈现的单评审。")
+    else:
+        human_block = ""
+        human_status_text = "人工盲评仍在进行；主表人工列保持 N/A，完成后再按锁定规则汇总。"
+        human_limit_text = ("人工盲评进行中；主表编辑成功率/严重伪影率为 N/A，直到 176 题全部合法完成。"
+                            "单评审已经看过带方法标注的固定网格，因此即使完成 176 题，也只能称"
+                            "“方法名隐藏、随机左右呈现的单评审”。")
     technical = json.loads((res / "technical_check.json").read_text(encoding="utf-8"))
     coverage = json.loads((res / "coverage.json").read_text(encoding="utf-8"))
     conclusion = (res / "conclusion.md").read_text(encoding="utf-8")
@@ -101,7 +123,7 @@ L/D/A 各 2000 更新，AdamW LR 1e-4，LoRA rank 4、alpha 4、dropout 0、scal
 
 ## 4. 数据、训练、资源与评测
 
-从 CelebAMask-HQ 的 30000 张原图按 seed=20261119 确定性排序；通过 CelebA-HQ→CelebA 映射的 **orig_file 文件名**与 `identity_CelebA.txt` 取得 person_id。这里披露一个已修正的元数据错误：早期筛选用的是 mapping 的 `orig_idx`（0 基），而官方文件名是 1 基，导致训练时记录的人物编号整体错位；事后用 `orig_file` 重算后，8 名正式人物、2 名候补仍互不相同，且与正确历史人物集合 overlap 为空。源图像素、训练、生成和 ArcFace 分数均未改变，因此不重训，只修正元数据与审计记录。排除 12 个历史图像编号及其人物、历史配置中出现过的额外图像，以及相互 ArcFace 余弦≥0.65 的疑似同人。自动筛查要求单张目标脸 det≥0.8、面积占整图 [0.06,0.50]，并利用官方 pose/attribute 注释排除严重侧转、眼镜、帽子、模糊。
+从 CelebAMask-HQ 的 30000 张原图按 seed=20261119 确定性排序；通过 CelebA-HQ→CelebA 映射的 **orig_file 文件名**与 `identity_CelebA.txt` 取得 person_id。这里披露一个已修正的元数据错误：早期筛选用的是 mapping 的 `orig_idx`（0 基），而官方文件名是 1 基，导致训练时记录的人物编号整体错位；事后用 `orig_file` 重算后，8 名正式人物、2 名候补仍互不相同，且与正确历史人物集合 overlap 为空。源图像素、训练、生成和 ArcFace 分数均未改变，因此不重训，只修正元数据与审计记录。历史图像编号本身被直接排除；历史**人物**排除当时误用了同一错位列，事后用 orig_file 审计显示与正式人物无重合。另排除历史配置中出现过的额外图像，以及相互 ArcFace 余弦≥0.65 的疑似同人。自动筛查要求单张目标脸 det≥0.8、面积占整图 [0.06,0.50]，并利用官方 pose/attribute 注释排除严重侧转、眼镜、帽子、模糊。
 
 **需要明确披露的偏差：**执行者无法进行人工视觉审图，源图筛选采用上述自动代理并保留 `source_review.png` 供人工复核；176 题盲评由一名人类评审进行中，完成后主表才会填入人工列。任何自动指标都不能替代人工编辑判断。
 
@@ -142,6 +164,10 @@ D−B 的身份收益并不是无代价的：全句 CLIP Δ={float(db_clip):+.4f
 
 D−B 的双目标脸子集 Δ={db_both:+.4f}（{db_both_n}/128 对）、脸面积比 [0.8,1.25] 子集 Δ={db_match:+.4f}（{db_match_n}/128 对）仍为正；但这是按生成结果筛选的辅助子集，样本少，不能排除构图、姿态、纹理质量和选择偏差，不能作强因果排除。与此同时，D 的脸面积从 B 的约 0.161 升到 0.220，目标脸率从 0.844 升到 0.883（+0.039，97.5% 区间跨 0）；身份与构图同时变化，报告必须把这一起呈现，不能只报 ArcFace。
 
+{human_status_text}
+
+{human_block}
+
 场景指标的下降在图上也很直接：B 的场景四分类接近 1.00，L 只有 0.23，D 回到 0.58，A 为 0.64。一个与现象相符的解释是：只优化 token 的 B 保留更多冻结底座的文本条件行为；L/D/A 在单张源图上继续训练 2000 步，LoRA 可能同时拟合源图背景/构图。固定终点实验不能证明这是唯一根因。图像 adapter 与弱去噪的作用更像“把 LoRA 拉回文本条件”，它提高了 D 相对 L 的 CLIP/场景，却没有把 D 拉回 B 的水平。这是本轮最重要的失败/折中证据，而不是可以用“身份更高”掩盖的副作用。
 
 固定正文图使用人物顺序第 1/3/5/7 人、p03/p04/p05/p08、seed101，共 16 组，不按效果挑选；完整网格在 `results/disen_formal_v1/grids/`。人工查看固定网格（非盲）还发现：L 有明显纹理破碎，D/A 部分结果有较强描边、过饱和和不自然面部纹理；ArcFace 不能回答这些图是否更自然、更可用。该观察作为人工质量限制报告，不替代正在进行的 176 题盲评。诊断图 `db_identity_extremes.png` 只展示 D−B 身份差最好/最差的各两个键，不替代完整网格。
@@ -155,7 +181,7 @@ D−B 的双目标脸子集 Δ={db_both:+.4f}（{db_both_n}/128 对）、脸面�
 - **D−L** 回答“在 LoRA 上再加图像分支和两个目标”的净作用；**D−A** 回答弱去噪项在该实现中的作用。二者都不等于 D−B。
 - B 与 L/D/A 的总训练量不同，这是两阶段方法的显式设计；D 比 L 多一条有梯度的 U-Net 前向，不能写等 FLOPs。
 - 8 人、每人一个训练种子；生成有两个采样种子。人物间一致性与采样变化不能替代训练种子稳健性。
-- 人工盲评进行中；主表编辑成功率/严重伪影率为 N/A，直到 176 题全部合法完成。单评审已经看过带方法标注的固定网格，因此即使完成 176 题，也只能称“方法名隐藏、随机左右呈现的单评审”，不能称完全盲或独立多人验证。
+- {human_limit_text} 不能称完全盲或独立多人验证。
 - 本轮使用固定的常见编辑基准，部分场景与历史实验重叠；新的是人物与训练方法，不声称未见场景家族的泛化。
 - 此前 CPA/Mixed 等文本侧/损失探索未达预期，保持原判定，不混入本轮统计；完整历史在附录。
 - 人工盲评尚未完成，因此编辑成功率、严重伪影率和人眼偏好都没有进入主表；自动 CLIP 只能说明图文相似度，不能替代“红围巾是否真的在脖子上”“洗衣店里是否有洗衣机”这类判断。

@@ -314,6 +314,26 @@ def main() -> None:
                     f"ArcFace Δ={db_both:+.4f}、脸面积比匹配子集（{db_match_n}/128 对）"
                     f"Δ={db_matched:+.4f} 仍为正，但这些都是按生成结果筛选的辅助子集，"
                     "样本少，不能排除构图、姿态、纹理质量和选择偏差。")
+    if edit_available:
+        hp = human["preference"]
+        human_lines = [
+            f"- 人工盲评：已完成 {human.get('n_filled')} 题。",
+            f"- 人工 joint 偏好（160 对）：D−B {hp['B-D']['joint']['win_rate']:.3f} "
+            f"[{hp['B-D']['joint']['ci_low']:.3f},{hp['B-D']['joint']['ci_high']:.3f}]；"
+            f"L−B {hp['B-L']['joint']['win_rate']:.3f}；D−L {hp['D-L']['joint']['win_rate']:.3f}。",
+            f"- 人工身份偏好：D−B {hp['B-D']['identity']['win_rate']:.3f}；"
+            f"L−B {hp['B-L']['identity']['win_rate']:.3f}；D−L {hp['D-L']['identity']['win_rate']:.3f}。",
+            f"- 人工编辑成功率(p03–p08)：B {human['edit_success']['B']['rate']:.3f}，"
+            f"L {human['edit_success']['L']['rate']:.3f}，D {human['edit_success']['D']['rate']:.3f}；"
+            f"编辑差 D−B {human['edit_differences']['D-B']['mean_delta']:+.3f}，"
+            f"L−B {human['edit_differences']['L-B']['mean_delta']:+.3f}。",
+            f"- 重复一致性：joint {human['repeat_consistency']['joint_agreement']}，"
+            f"identity {human['repeat_consistency']['identity_agreement']}；"
+            f"图像去重冲突 {len(human.get('dedupe_conflicts', []))} 条。",
+        ]
+    else:
+        human_lines = ["- 人工盲评：进行中（未完成，主表 N/A）。",
+                       "不能用自动指标替代人工编辑成功率或严重伪影率。"]
     concl = [
         "# 结论草稿（按预注册规则，2026-11-19）", "",
         f"- 主比较 D−B ArcFace：Δ={db_arc:+.6f}，97.5% 区间下界 {db_lo:+.6f}；"
@@ -331,8 +351,7 @@ def main() -> None:
         f"全句 CLIP Δ={da_clip:+.6f}；场景 margin Δ={da_scene:+.6f}；场景四分类 Δ={da_sacc:+.6f}。"
         "弱去噪项没有得到主身份指标的明确增益支持；诊断子集偏正但伴随检脸率和文本指标的混合负向变化，"
         "样本不足以证明零效应。",
-        f"- 人工盲评：{'已完成 ' + str(human.get('n_filled')) + ' 题' if edit_available else '进行中（未完成，主表 N/A）'}；"
-        "不能用自动指标替代人工编辑成功率或严重伪影率。",
+        *human_lines,
         "", f"**判定：** {verdict}", "",
         "限制：8 人、每人一个训练种子、两个采样种子；区间是人物层 bootstrap 近似；"
         "不能声称与原论文同一测试协议。历史 CPA/Mixed 等结果保持原判定，未混入本轮统计。",
