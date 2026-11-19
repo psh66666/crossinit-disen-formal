@@ -154,6 +154,39 @@ def main() -> None:
     assert he["status"] == "empty" and he["available"] is False
     assert hp["status"] == "partial" and hp["available"] is False
 
+
+    # 4b. Duplicate image with a conflicting later label: keep first, report conflict.
+    rows = read_csv(r)
+    by_task = {x["task_id"]: x for x in rows}
+    first = {}
+    duplicate = None
+    for tid in key_obj["order"]:
+        e = key_obj["tasks"][tid]
+        for side in ("A", "B"):
+            k = e.get(f"{side}_key")
+            if k in first and first[k] != (tid, side):
+                duplicate = (first[k], (tid, side), k)
+                break
+            first[k] = (tid, side)
+        if duplicate:
+            break
+    assert duplicate is not None
+    (ft, fs), (lt, ls), dk = duplicate
+    by_task[lt][f"edit_success_{ls}"] = "no"
+    conflict_csv = tmp / "conflict.csv"
+    with open(conflict_csv, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader()
+        for tid in key_obj["order"]:
+            w.writerow(by_task[tid])
+    hc = human_summary(conflict_csv, Path(args.key))
+    results["dedupe_conflict"] = {
+        "image_key": dk, "first_task": ft, "later_task": lt,
+        "conflicts": len(hc["dedupe_conflicts"]),
+        "unique_images": hc["unique_images_scored"],
+    }
+    assert len(hc["dedupe_conflicts"]) >= 1
+    assert hc["unique_images_scored"] == 192
+
     # 5. Preference fields are actually consumed, not silently ignored.
     r3 = tmp / "identity_swap.csv"
     rows = read_csv(r)

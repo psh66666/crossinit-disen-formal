@@ -56,7 +56,7 @@ bitwise reproduction.
 - Deterministic order: seed 20261119.
 - Person IDs come from the CelebA-HQ→CelebA mapping plus `identity_CelebA.txt`.
 - Historical images/persons are excluded; a post-hoc audit is in
-  `data/disen_formal/history_audit.json` (empty overlap).
+  `data/disen_formal/history_audit_corrected.json` (empty overlap).
 - Automated source screen (pose/attribute/InsightFace) is disclosed in
   `data/disen_formal/source_review.json`; human visual review is still pending.
 - 8 formal + 2 reserve people, one source image each, no masks.
@@ -131,9 +131,8 @@ python -m scripts.disen_formal.package
 
 ## Honest limitations
 
-1. Human source-image review and human blind ratings were not completed by the
-   executor (no visual capability). The blind page and empty ratings CSV are
-   included; human columns are N/A.
+1. Human source-image review is pending. The 176-task blind review is being
+   completed by one human rater; human columns are N/A until all tasks are complete.
 2. Eight people, one training seed, two sampling seeds; intervals are
    person-level approximations.
 3. The source selection uses an automated proxy; `source_review.png` remains for
